@@ -23,7 +23,10 @@
         Cache.remember(this.routeNmae, async () => {
           let apollo = await this.$apollo.query({
             query: gql`query ($package: String!, $model: String!) {
-              sidebar(package: $package, model: $model)
+              model(package: $package, model: $model){
+                layout
+                data
+              }
             }`,
             variables: {
               package: packageModel[0],
