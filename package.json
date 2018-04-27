@@ -1,0 +1,24 @@
+{
+  "name": "json-vue-iview",
+  "version": "1.0.1",
+  "description": "自动构建vue-iview页面",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laracore/json-vue-iview.git"
+  },
+  "keywords": [
+    "vue",
+    "iview页面",
+    "builder"
+  ],
+  "author": "bigRcos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laracore/json-vue-iview/issues"
+  },
+  "homepage": "https://github.com/laracore/json-vue-iview#readme"
+}
