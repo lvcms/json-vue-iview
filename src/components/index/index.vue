@@ -41,48 +41,49 @@
       }
     },
     computed: {
-      routeNmae() {
-        return this.$route.name
-      }
+      package() {
+        return this.$route.name.split(":")[0]
+      },
+      model() {
+        return this.$route.name.split(":")[1]
+      },
     },
     created () {
       this.initJson()
     },
     methods: {
       initJson(){
-        let packageModel = this.routeNmae.split(":")
-        this.$apollo.query({
-          query: gql`query ($package: String!, $model: String!) {
-            model(package: $package, model: $model){
-              data
-            }
-          }`,
-          variables: {
-            package: packageModel[0],
-            model: packageModel[1]
-          }
-        }).then((data) => {
-          this.data = data.data.model[0].data
-        })
-        // Cache.remember(this.routeNmae, async () => {
-        //   let apollo = await this.$apollo.query({
-        //     query: gql`query ($package: String!, $model: String!) {
-        //       model(package: $package, model: $model){
-        //         layout
-        //         data
-        //       }
-        //     }`,
-        //     variables: {
-        //       package: packageModel[0],
-        //       model: packageModel[1]
+        // this.$apollo.query({
+        //   query: gql`query ($package: String!, $model: String!) {
+        //     model(package: $package, model: $model){
+        //       data
         //     }
-        //   })
-        //   return apollo.data.model[0]
-        // } , 60*24*7).then((model) => {
-        //   console.log(model);
-        //   // this.layout = model[0].layout
-        //   // console.log(this.layout);
+        //   }`,
+        //   variables: {
+        //     package: packageModel[0],
+        //     model: packageModel[1]
+        //   }
+        // }).then((data) => {
+        //   this.data = data.data.model[0].data
         // })
+        Cache.remember(this.$route.name, async () => {
+          let apollo = await this.$apollo.query({
+            query: gql`query ($package: String!, $model: String!) {
+              model(package: $package, model: $model){
+                layout
+              }
+            }`,
+            variables: {
+              package: this.package,
+              model: this.model
+            }
+          })
+          return apollo.data.model[0]
+        } , 60*24*7).then((model) => {
+          console.log(model);
+          // this.layout = model[0].layout
+          // console.log(this.layout);
+        })
       }
     }
   }
