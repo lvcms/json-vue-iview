@@ -1,5 +1,10 @@
 <template>
-  <Row :gutter="16">
+  <Row
+    :gutter="this.layout.gutter"
+    :type="this.layout.type"
+    :align="this.layout.align"
+    :justify="this.layout.justify"
+  >
           <Col span="6">
               <div>col-6</div>
           </Col>
@@ -37,7 +42,7 @@
     name: 'jvi-index',
     data() {
       return {
-        data: {},
+        layout: {},
       }
     },
     computed: {
@@ -53,20 +58,7 @@
     },
     methods: {
       initJson(){
-        // this.$apollo.query({
-        //   query: gql`query ($package: String!, $model: String!) {
-        //     model(package: $package, model: $model){
-        //       data
-        //     }
-        //   }`,
-        //   variables: {
-        //     package: packageModel[0],
-        //     model: packageModel[1]
-        //   }
-        // }).then((data) => {
-        //   this.data = data.data.model[0].data
-        // })
-        Cache.remember(this.$route.name, async () => {
+        Cache.remember(this.$route.name+":layout", async () => {
           let apollo = await this.$apollo.query({
             query: gql`query ($package: String!, $model: String!) {
               model(package: $package, model: $model){
@@ -78,11 +70,9 @@
               model: this.model
             }
           })
-          return apollo.data.model[0]
-        } , 60*24*7).then((model) => {
-          console.log(model);
-          // this.layout = model[0].layout
-          // console.log(this.layout);
+          return apollo.data.model[0].layout
+        } , 60*24*7).then((layout) => {
+          this.layout = layout
         })
       }
     }
