@@ -1,37 +1,27 @@
 <template>
   <Row
-    :gutter="this.layout.gutter"
-    :type="this.layout.type"
-    :align="this.layout.align"
-    :justify="this.layout.justify"
+    :gutter="row.gutter"
+    :type="row.type"
+    :align="row.align"
+    :justify="row.justify"
   >
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
-          <Col span="6">
-              <div>col-6</div>
-          </Col>
+    <Col
+      v-for="(item, index, key) in itemLayout"
+      :span="item.col.span"
+      :order="item.col.order"
+      :offset="item.col.offset"
+      :push="item.col.push"
+      :pull="item.col.pull"
+      :xs="item.col.xs"
+      :sm="item.col.sm"
+      :md="item.col.md"
+      :lg="item.col.lg"
+      :key="index"
+    >
+      <Card :style="item.col.style">
+        123
+      </Card>
+    </Col>
   </Row>
 </template>
 
@@ -42,7 +32,8 @@
     name: 'jvi-index',
     data() {
       return {
-        layout: {},
+        row: {},
+        itemLayout: {},
       }
     },
     computed: {
@@ -63,6 +54,7 @@
             query: gql`query ($package: String!, $model: String!) {
               model(package: $package, model: $model){
                 layout
+                itemLayout
               }
             }`,
             variables: {
@@ -70,18 +62,14 @@
               model: this.model
             }
           })
-          return apollo.data.model[0].layout
-        } , 60*24*7).then((layout) => {
-          this.layout = layout
+          return apollo.data.model[0]
+        } , 60*24*7).then((data) => {
+          this.row = data.layout
+          this.itemLayout = data.itemLayout
         })
       }
     }
   }
 </script>
 <style lang="scss" scoped>
-.ivu-col{
-  div{
-    background:rgba(0,153,229,.9);
-  }
-}
 </style>
