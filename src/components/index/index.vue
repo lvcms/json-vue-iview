@@ -1,5 +1,5 @@
 <template>
-  <Row
+  <!-- <Row
     :gutter="row.gutter"
     :type="row.type"
     :align="row.align"
@@ -22,7 +22,14 @@
         123
       </Card>
     </Col>
-  </Row>
+  </Row> -->
+  <div id="app">
+    <jvi-row
+      v-for="(row, index, key) in layout"
+      :row="row"
+      :key="index"
+    />
+  </div>
 </template>
 
 <script>
@@ -32,7 +39,7 @@
     name: 'jvi-index',
     data() {
       return {
-        row: {},
+        layout: {},
         itemLayout: {},
       }
     },
@@ -64,7 +71,8 @@
           })
           return apollo.data.model[0]
         } , 60*24*7).then((data) => {
-          this.row = data.layout
+          this.layout = data.layout
+          console.log(this.layout);
           this.itemLayout = data.itemLayout
         })
       }

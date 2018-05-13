@@ -1,5 +1,9 @@
 import Index from './components/index'
 
+// layout
+import Row from './components/layout-row'
+import Col from './components/layout-col'
+
 // import IndexItem from './components/index-item'
 //
 // import QrcodeItem from './components/qrcode-item'//二维码
@@ -46,6 +50,9 @@ import Vue from 'vue'
 
 const components = [
   Index,
+
+  Row,
+  Col,
   // IndexItem,
   //
   // QrcodeItem,
