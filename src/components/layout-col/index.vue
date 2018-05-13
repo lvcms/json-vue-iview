@@ -31,18 +31,8 @@
     components: {
       subCol: () => import('./index.vue')
     },
-    data() {
-      return {
-      }
-    },
     props: {
       col: Object
-    },
-    computed: {
-    },
-    created () {
-    },
-    methods: {
     }
   }
 </script>

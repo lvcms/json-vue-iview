@@ -26,20 +26,8 @@
     components: {
       subRow: () => import('./index.vue')
     },
-    data() {
-      return {
-      }
-    },
     props: {
       row: Object
-    },
-    computed: {
-
-    },
-    created () {
-    },
-    methods: {
-
     }
   }
 </script>

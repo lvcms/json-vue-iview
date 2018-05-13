@@ -1,28 +1,4 @@
 <template>
-  <!-- <Row
-    :gutter="row.gutter"
-    :type="row.type"
-    :align="row.align"
-    :justify="row.justify"
-  >
-    <Col
-      v-for="(item, index, key) in itemLayout"
-      :span="item.col.span"
-      :order="item.col.order"
-      :offset="item.col.offset"
-      :push="item.col.push"
-      :pull="item.col.pull"
-      :xs="item.col.xs"
-      :sm="item.col.sm"
-      :md="item.col.md"
-      :lg="item.col.lg"
-      :key="index"
-    >
-      <Card :style="item.col.style">
-        123
-      </Card>
-    </Col>
-  </Row> -->
   <div id="app">
     <jvi-row
       v-for="(row, index, key) in layout"
