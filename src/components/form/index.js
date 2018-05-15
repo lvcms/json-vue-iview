@@ -1,2 +1,2 @@
-import Form from './form.vue';
-export default Form;
+import Index from './form.vue';
+export default Index;

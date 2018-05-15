@@ -15,8 +15,7 @@
     name: 'jvi-index',
     data() {
       return {
-        layout: {},
-        itemLayout: {},
+        layout: {}
       }
     },
     computed: {
@@ -55,5 +54,5 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 </style>

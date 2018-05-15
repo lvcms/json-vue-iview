@@ -10,7 +10,7 @@ import Col from './components/layout-col'
 // import DialogItem from './components/dialog-item'//弹窗
 // import PaginationItem from './components/pagination-item'//分页
 //
-// import Form from './components/form'
+import Form from './components/form'
 // import FormItem from './components/form-item'
 // import FormItemText from './components/form-item-text'
 // import FormItemCheckbox from './components/form-item-checkbox'
@@ -59,7 +59,7 @@ const components = [
   // DialogItem,
   // PaginationItem,
   //
-  // Form,
+  Form,
   // FormItem,
   // FormItemText,
   // FormItemCheckbox,
