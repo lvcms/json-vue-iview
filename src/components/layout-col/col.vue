@@ -29,7 +29,7 @@
   export default {
     name: 'jvi-col',
     components: {
-      subCol: () => import('./index.vue')
+      subCol: () => import('./col.vue')
     },
     props: {
       col: Object

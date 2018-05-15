@@ -24,7 +24,7 @@
   export default {
     name: 'jvi-row',
     components: {
-      subRow: () => import('./index.vue')
+      subRow: () => import('./row.vue')
     },
     props: {
       row: Object

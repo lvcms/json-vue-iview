@@ -1,2 +1,2 @@
-import Index from './index.vue';
+import Index from './row.vue';
 export default Index;
