@@ -17,7 +17,7 @@
       :key="index"
     />
     <Card
-      v-if="style"
+      v-if="content.style"
       :style="config.style"
     >
       <p
@@ -29,8 +29,8 @@
       </p>
       {{ item }}
       <jvi-form
-        v-if="style=='form'"
-        :form="itemLayout"
+        v-if="itemStyle=='form'"
+        :layout="itemLayout"
       />
     </Card>
   </Col>
@@ -59,23 +59,34 @@
         return this.$route.name.split(":")[1]
       },
       config() {
+        // 获取 col 配置
         return this.col.config
       },
       content() {
         return this.col.content
       },
       card() {
+        // 获取 card 配置
         return this.col.content.config.card? this.col.content.config.card: null
       },
       item() {
+        // 获取项目名称 比如 form1 form2 table1  table2
         return this.col.content.config.item? this.col.content.config.item: null
       },
-      style() {
-        return this.col.content.style? this.col.content.style: null
+      itemStyle() {
+        /**
+         * [ 获取项目样式后才会启用项目组件 ]
+         * [ 比如 form 组件 table 组件 ]
+         */
+        return this.itemLayout.style? this.itemLayout.style: false
       }
     },
     methods: {
       getItemLayout() {
+        /**
+         * [ 根据当前项目名称异步获取 layout 数据 ]
+         * [ 注意：数据异步 ]
+         */
         Cache.get(this.$route.name+":layout").then((data) => {
           this.itemLayout = data.itemLayout[this.item]
         })
