@@ -1,6 +1,7 @@
 <template>
     <i-input
       v-model="currentValue"
+      :type="type"
       :size="size"
       :placeholder="placeholder"
       :clearable="clearable"
@@ -37,11 +38,18 @@ export default {
      */
     currentValue: {
       get() {
-        return this.value? this.value.toString(): this.config.default
+        return this.value? this.value.toString(): null
       },
       set(newValue) {
         this.$emit('input', newValue)
       }
+    },
+    /**
+     * [type 输入框类型，可选值为 text、password、textarea、url、email、date]
+     * @return {[String]} [description]
+     */
+    type() {
+      return this.config.type? this.config.type: 'text'
     },
     /**
      * [size 输入框尺寸，可选值为large、small、default或者不设置]
