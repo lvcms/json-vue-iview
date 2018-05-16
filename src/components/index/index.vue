@@ -36,7 +36,7 @@
             query: gql`query ($package: String!, $model: String!) {
               model(package: $package, model: $model){
                 layout
-                itemLayout
+                item
               }
             }`,
             variables: {
@@ -47,8 +47,6 @@
           return apollo.data.model[0]
         } , 60*24*7).then((data) => {
           this.layout = data.layout
-          console.log(this.layout);
-          this.itemLayout = data.itemLayout
         })
       }
     }

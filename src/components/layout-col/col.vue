@@ -12,8 +12,8 @@
   >
     <subCol
       v-if="content instanceof Array"
-      v-for="(item, index, key) in content"
-      :col="item"
+      v-for="(value, index, key) in content"
+      :col="value"
       :key="index"
     />
     <Card
@@ -29,7 +29,7 @@
       </p>
       <jvi-form
         v-if="itemStyle=='form'"
-        :layout="itemLayout"
+        :layout="item"
       />
     </Card>
   </Col>
@@ -47,7 +47,7 @@
     },
     data() {
       return {
-        itemLayout: {}
+        item: {}
       }
     },
     computed: {
@@ -68,7 +68,7 @@
         // 获取 card 配置
         return this.col.content.config.card? this.col.content.config.card: null
       },
-      item() {
+      itemName() {
         // 获取项目名称 比如 form1 form2 table1  table2
         return this.col.content.config.item? this.col.content.config.item: null
       },
@@ -77,17 +77,17 @@
          * [ 获取项目样式后才会启用项目组件 ]
          * [ 比如 form 组件 table 组件 ]
          */
-        return this.itemLayout.style? this.itemLayout.style: false
+        return this.item.style? this.item.style: false
       }
     },
     methods: {
-      getItemLayout() {
+      getItem() {
         /**
          * [ 根据当前项目名称异步获取 layout 数据 ]
          * [ 注意：数据异步 ]
          */
         Cache.get(this.$route.name+":layout").then((data) => {
-          this.itemLayout = data.itemLayout[this.item]
+          this.item = data.item[this.itemName]
         })
       },
       getitemData() {
@@ -95,7 +95,7 @@
       }
     },
     mounted() {
-      this.getItemLayout()
+      this.getItem()
     }
   }
 </script>
