@@ -23,9 +23,10 @@
         :error="item.error"
         :show-message="item.showMessage"
       >
-      {{item}}
-      {{index}}
-      {{key}}
+        <jvi-input
+          v-if="item.component=='input'"
+          :config="item"
+        />
       </form-item>
     </template>
     <form-item label="E-mail" prop="mail">
@@ -49,7 +50,8 @@ export default {
       formValidate: {
         mail: 'xilewanggou@126.com',
         city: 'beijing',
-      }
+      },
+      input:'demo'
     }
   },
   props: {
@@ -120,7 +122,7 @@ export default {
 
   },
   mounted() {
-    console.log(this.items);
+    // console.log(this.items);
   }
 }
 </script>
