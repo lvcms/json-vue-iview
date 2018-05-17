@@ -1,7 +1,7 @@
 <template>
   <i-form
     :ref="ref"
-    :model="model"
+    :model="value"
     :rules="formValidate"
     :inline="inline"
     :label-position="labelPosition"
@@ -26,19 +26,10 @@
         <jvi-input
           v-if="item.component=='input'"
           :config="item"
+          v-model="value[index]"
         />
       </form-item>
     </template>
-    <form-item label="E-mail" prop="mail">
-        <i-input v-model="formValidate.mail" placeholder="Enter your e-mail"></i-input>
-    </form-item>
-    <form-item label="City" prop="city">
-          <i-select v-model="formValidate.city" placeholder="Select your city">
-              <i-option value="beijing">New York</i-option>
-              <i-option value="shanghai">London</i-option>
-              <i-option value="shenzhen">Sydney</i-option>
-          </i-select>
-    </form-item>
   </i-form>
 </template>
 
@@ -56,7 +47,7 @@ export default {
   },
   props: {
       layout:{},
-      model:{}
+      value:{}
   },
   computed: {
     ref() {
@@ -122,7 +113,7 @@ export default {
 
   },
   mounted() {
-    // console.log(this.items);
+    // console.log(this.value);
   }
 }
 </script>

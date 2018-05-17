@@ -30,6 +30,7 @@
       <jvi-form
         v-if="itemStyle=='form'"
         :layout="item"
+        :value="itemValue"
       />
     </Card>
   </Col>
@@ -37,6 +38,7 @@
 
 <script>
   import Cache from 'lf-cache'
+  import gql from 'graphql-tag'
   export default {
     name: 'jvi-col',
     components: {
@@ -47,7 +49,8 @@
     },
     data() {
       return {
-        item: {}
+        item: {},
+        itemValue: {}
       }
     },
     computed: {
@@ -90,12 +93,26 @@
           this.item = data.item[this.itemName]
         })
       },
-      getitemData() {
-
+      getItemValue() {
+        this.$apollo.query({
+          query: gql`query ($package: String!, $model: String!, $item: String!) {
+            model(package: $package, model: $model, item: $item){
+              value
+            }
+          }`,
+          variables: {
+            package: this.package,
+            model: this.model,
+            item: this.itemName
+          }
+        }).then((result) => {
+          this.itemValue = result.data.model.value
+        })
       }
     },
     mounted() {
       this.getItem()
+      this.getItemValue()
     }
   }
 </script>
