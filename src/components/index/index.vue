@@ -44,7 +44,7 @@
               model: this.model
             }
           })
-          return apollo.data.model[0]
+          return apollo.data.model
         } , 60*24*7).then((data) => {
           this.layout = data.layout
         })
