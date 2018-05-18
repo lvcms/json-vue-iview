@@ -104,7 +104,8 @@
             package: this.package,
             model: this.model,
             item: this.itemName
-          }
+          },
+          fetchPolicy: 'network-only',
         }).then((result) => {
           this.itemValue = result.data.model.value
         })
