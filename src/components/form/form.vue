@@ -37,17 +37,22 @@
     </template>
     <form-item>
         <i-button
-          type="primary"
+          v-if="!buttonSubmit.hidden"
+          :type="buttonSubmit.type"
+          :style="buttonSubmit.style"
+          :disabled="buttonSubmit.disabled"
           @click="handleSubmit(ref)"
         >
-          Submit
+          {{buttonSubmit.title}}
         </i-button>
         <i-button
-          type="ghost"
+          v-if="!buttonReset.hidden"
+          :type="buttonReset.type"
+          :style="buttonReset.style"
+          :disabled="buttonReset.disabled"
           @click="handleReset(ref)"
-          style="margin-left: 3vh"
         >
-          Reset
+          {{buttonReset.title}}
         </i-button>
     </form-item>
   </i-form>
@@ -120,6 +125,33 @@ export default {
        * @type {Object}
        */
       return this.layout.item? this.layout.item: {}
+    },
+    /**
+     * [buttonSubmit 提交按钮]
+     * @type {Object}
+     */
+    buttonSubmit() {
+      return this.layout.config.buttonSubmit? this.layout.config.buttonSubmit: {
+        hidden: false,
+        disabled: false,
+        type: 'primary',
+        title: '提交'
+      }
+    },
+    /**
+     * [buttonSubmit 提交按钮]
+     * @type {Object}
+     */
+    buttonReset() {
+      return this.layout.config.buttonReset? this.layout.config.buttonReset: {
+        hidden: false,
+        disabled: false,
+        type: 'ghost',
+        title: '重置',
+        style: {
+          marginLeft: '3vh'
+        }
+      }
     }
   },
   created () {
@@ -130,7 +162,8 @@ export default {
           if (valid) {
               this.$Message.success('Success!');
           } else {
-              this.$Message.error('Fail!');
+              console.log('error submit!! 请检查你的提交信息是否符合规则');
+              this.$Message.error('请检查你的提交信息是否符合规范');
           }
       })
     },
