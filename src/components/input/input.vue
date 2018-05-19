@@ -27,11 +27,9 @@ export default {
   props: {
     config: {
         type: Object,
-        default: {}
     },
     value: {
         type: [String, Number],
-        default: null
     },
   },
   computed: {
