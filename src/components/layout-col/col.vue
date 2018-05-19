@@ -107,7 +107,7 @@
           },
           fetchPolicy: 'network-only',
         }).then((result) => {
-          this.itemValue = result.data.model.value
+          this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
         })
       }
     },
