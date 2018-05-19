@@ -2,7 +2,7 @@
   <i-form
     :ref="ref"
     :model="value"
-    :rules="formValidate"
+    :rules="validate"
     :inline="inline"
     :label-position="labelPosition"
     :label-width="labelWidth"
@@ -15,7 +15,7 @@
     >
       <form-item
         :label="item.label"
-        :prop="item.index"
+        :prop="index"
         :label-width="item.labelWidth"
         :label-for="item.labelFor"
         :required="item.required"
@@ -35,6 +35,21 @@
         />
       </form-item>
     </template>
+    <form-item>
+        <i-button
+          type="primary"
+          @click="handleSubmit(ref)"
+        >
+          Submit
+        </i-button>
+        <i-button
+          type="ghost"
+          @click="handleReset(ref)"
+          style="margin-left: 3vh"
+        >
+          Reset
+        </i-button>
+    </form-item>
   </i-form>
 </template>
 
@@ -43,11 +58,6 @@ export default {
   name: 'jvi-form',
   data() {
     return {
-      formValidate: {
-        mail: 'xilewanggou@126.com',
-        city: 'beijing',
-      },
-      input:'demo'
     }
   },
   props: {
@@ -115,9 +125,21 @@ export default {
   created () {
   },
   methods: {
-
+    handleSubmit(name) {
+      this.$refs[name].validate((valid) => {
+          if (valid) {
+              this.$Message.success('Success!');
+          } else {
+              this.$Message.error('Fail!');
+          }
+      })
+    },
+    handleReset(name) {;
+      this.$refs[name].resetFields();
+    }
   },
   mounted() {
+    // console.log(this.value);
   }
 }
 </script>
