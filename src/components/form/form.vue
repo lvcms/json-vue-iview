@@ -117,7 +117,7 @@ export default {
     items() {
       /**
        * [autocomplete 原生的 autocomplete 属性，可选值为 off 或 on]
-       * @type {String}
+       * @type {Object}
        */
       return this.layout.item? this.layout.item: {}
     }

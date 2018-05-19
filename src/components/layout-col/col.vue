@@ -27,11 +27,20 @@
         <i :class="card.icon"></i>
         {{ card.title }}
       </p>
-      <jvi-form
-        v-if="itemStyle=='form'"
-        :layout="item"
-        :value="itemValue"
-      />
+      <template v-if="itemValue">
+        <jvi-form
+          v-if="itemStyle=='form'"
+          :layout="item"
+          :value="itemValue"
+        />
+      </template>
+      <Spin
+        v-else
+        fix
+      >
+          <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
+          <div>Loading</div>
+      </Spin>
     </Card>
   </Col>
 </template>
@@ -50,7 +59,7 @@
     data() {
       return {
         item: {},
-        itemValue: {}
+        itemValue: null
       }
     },
     computed: {
@@ -120,5 +129,8 @@
 <style lang="scss" scoped>
   .ivu-card{
     margin-bottom: 1vh;
+  }
+  .spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
   }
 </style>
