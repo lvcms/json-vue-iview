@@ -7,6 +7,7 @@ import Col from './components/layout-col'
 import Form from './components/form'
 
 import Input from './components/input'
+import Switch from './components/switch'
 
 import Vue from 'vue'
 
@@ -24,6 +25,7 @@ const components = [
   Form,
 
   Input,
+  Switch,
 ]
 
 const install = function (Vue, opts = {}) {

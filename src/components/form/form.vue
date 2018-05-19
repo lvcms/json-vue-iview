@@ -28,6 +28,11 @@
           :config="item"
           v-model="value[index]"
         />
+        <jvi-switch
+          v-if="item.component=='switch'"
+          :config="item"
+          v-model="value[index]"
+        />
       </form-item>
     </template>
   </i-form>

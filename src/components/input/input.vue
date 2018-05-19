@@ -29,7 +29,10 @@ export default {
         type: Object,
         default: {}
     },
-    value:null
+    value: {
+        type: String,
+        default: null
+    },
   },
   computed: {
     /**
@@ -38,7 +41,7 @@ export default {
      */
     currentValue: {
       get() {
-        return this.value? this.value.toString(): this.config.default
+        return this.value? this.value: this.config.default
       },
       set(newValue) {
         this.$emit('input', newValue)
