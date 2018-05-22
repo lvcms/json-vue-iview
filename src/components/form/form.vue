@@ -160,7 +160,7 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
           if (valid) {
-              this.$Message.success('Success!');
+              this.$emit('form-submit');
           } else {
               console.log('error submit!! 请检查你的提交信息是否符合规则');
               this.$Message.error('请检查你的提交信息是否符合规范');

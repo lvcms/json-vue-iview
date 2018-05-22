@@ -32,6 +32,7 @@
           v-if="itemStyle=='form'"
           :layout="item"
           :value="itemValue"
+          @form-submit="handleFormSubmit"
         />
       </template>
       <Spin
@@ -92,6 +93,12 @@
         return this.item.style? this.item.style: false
       }
     },
+    watch: {
+      itemValue:{
+        handler: 'mergeItemValue',
+        deep: true
+      },
+    },
     methods: {
       getItem() {
         /**
@@ -117,6 +124,31 @@
           fetchPolicy: 'network-only',
         }).then((result) => {
           this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
+        })
+      },
+      /**
+       * [mergeItemValue 后期合并多个 form 数据提交]
+       * @return {[type]} [description]
+       */
+      mergeItemValue() {
+        // console.log(this.package,this.model,this.itemName,this.itemValue);
+      },
+      handleFormSubmit() {
+        this.$apollo.mutate({
+          mutation: gql`mutation ($package: String!, $model: String!, $value: String!) {
+            updateModel(package: $package, model: $model, value: $value){
+              status,
+              message,
+              value
+            }
+          }`,
+          variables: {
+            package: this.package,
+            model: this.model,
+            value: JSON.stringify(this.itemValue)
+          },
+        }).then((result) => {
+          console.log(result);
         })
       }
     },
