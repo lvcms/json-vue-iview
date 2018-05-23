@@ -148,7 +148,7 @@
             value: JSON.stringify(this.itemValue)
           },
         }).then((result) => {
-          console.log(result);
+          this.$Message.success(result.data.updateModel.message)
         })
       }
     },
