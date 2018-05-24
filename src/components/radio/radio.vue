@@ -43,7 +43,6 @@ export default {
         return this.value? this.value: this.config.default
       },
       set(newValue) {
-        console.log(newValue);
         this.$emit('input', newValue)
       }
     },
