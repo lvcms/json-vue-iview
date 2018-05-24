@@ -38,6 +38,11 @@
           :config="item"
           v-model="value[index]"
         />
+        <jvi-checkbox
+          v-if="item.component=='checkbox'"
+          :config="item"
+          v-model="value[index]"
+        />
       </form-item>
     </template>
     <form-item>
