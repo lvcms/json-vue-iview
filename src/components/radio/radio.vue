@@ -47,7 +47,7 @@ export default {
       }
     },
     /**
-     * [groupType 可选值为 button 或不填，为 button 时使用按钮样式]
+     * [type 可选值为 button 或不填，为 button 时使用按钮样式]
      * @return {[String]} [description]
      */
     type() {
