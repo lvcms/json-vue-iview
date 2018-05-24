@@ -33,6 +33,11 @@
           :config="item"
           v-model="value[index]"
         />
+        <jvi-radio
+          v-if="item.component=='radio'"
+          :config="item"
+          v-model="value[index]"
+        />
       </form-item>
     </template>
     <form-item>

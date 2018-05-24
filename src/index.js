@@ -8,6 +8,7 @@ import Form from './components/form'
 
 import Input from './components/input'
 import Switch from './components/switch'
+import Radio from './components/radio'
 
 import Vue from 'vue'
 
@@ -26,6 +27,7 @@ const components = [
 
   Input,
   Switch,
+  Radio,
 ]
 
 const install = function (Vue, opts = {}) {
