@@ -1,29 +1,46 @@
 <template>
-  <CheckboxGroup
-    v-model="currentValue"
-    :type="type"
-    :size="size"
-  >
-    <template
-      v-for="(option, index, key) in options"
+  <div>
+    <Checkbox
+      v-if="allSelect"
+      :indeterminate="indeterminate"
+      :value="checkAll"
+      @click.prevent.native="handleCheckAll"
     >
-      <Checkbox
-        :label="option.label"
-        :disabled="option.disabled"
-        :size="option.size"
-        :true-value="option.trueValue"
-        :false-value="option.falseValue"
+        {{ allSelectName }}
+    </Checkbox>
+    <CheckboxGroup
+      v-model="currentValue"
+      :type="type"
+      :size="size"
+      @on-change="checkAllGroupChange"
+    >
+      <template
+        v-for="(option, index, key) in options"
       >
-        <i :class="option.icon"></i>
-        <span>{{ option.title }}</span>
-      </Checkbox>
-    </template>
-  </CheckboxGroup>
+        <Checkbox
+          :label="option.label"
+          :disabled="option.disabled"
+          :size="option.size"
+          :true-value="option.trueValue"
+          :false-value="option.falseValue"
+        >
+          <i :class="option.icon"></i>
+          <span>{{ option.title }}</span>
+        </Checkbox>
+      </template>
+    </CheckboxGroup>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'jvi-checkbox',
+  data () {
+    return {
+      indeterminate: false,
+      checkAll:false,
+    }
+  },
   props: {
     config: {
         type: Object,
@@ -42,7 +59,6 @@ export default {
         return this.value? this.value: this.config.default
       },
       set(newValue) {
-        console.log(newValue);
         this.$emit('input', newValue)
       }
     },
@@ -67,10 +83,59 @@ export default {
     options() {
       return this.config.options? this.config.options: {}
     },
-
+    /**
+     * [optionLabels 根据配置获取全选后的 label ]
+     * @return {[Object]} [description]
+     */
+    optionLabels() {
+      return this.config.options.map(item=>item.label)
+    },
+    /**
+     * [allSelect 全选是否显示]
+     * @return {[Boolean]} [description]
+     */
+    allSelect() {
+      return this.config.allSelect? this.config.allSelect: false
+    },
+    /**
+     * [allSelectName 全选名称]
+     * @return {[String]} [description]
+     */
+    allSelectName() {
+      return this.config.allSelectName? this.config.allSelectName: '全选'
+    }
+  },
+  methods: {
+    handleCheckAll() {
+      if (this.indeterminate) {
+          this.checkAll = false;
+      } else {
+          this.checkAll = !this.checkAll;
+      }
+      this.indeterminate = false
+      if (this.checkAll) {
+          this.currentValue = this.optionLabels;
+      } else {
+          this.currentValue = [];
+      }
+    },
+    checkAllGroupChange (data) {
+      if (data.length) {
+        if ((this.optionLabels.length == data.length)) {
+          this.checkAll = true
+          this.indeterminate = false
+        }else {
+          this.checkAll = false
+          this.indeterminate = true
+        }
+      }else{
+        this.checkAll = false
+        this.indeterminate = false
+      }
+    }
   },
   mounted() {
-    // console.log(this.config);
+    this.checkAllGroupChange(this.currentValue)
   }
 }
 </script>
