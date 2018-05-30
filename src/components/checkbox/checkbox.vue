@@ -46,13 +46,13 @@ export default {
         type: Object,
     },
     value: {
-        type: [String, Number, Array],
+        type: [String, Array],
     },
   },
   computed: {
     /**
      * [currentValue 指定当前选中的项目数据。可以使用 v-model 双向绑定数据]
-     * @type {String | Number}
+     * @type {String}
      */
     currentValue: {
       get() {
@@ -140,5 +140,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 </style>

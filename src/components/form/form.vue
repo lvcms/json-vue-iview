@@ -43,6 +43,11 @@
           :config="item"
           v-model="value[index]"
         />
+        <jvi-select
+          v-if="item.component=='select'"
+          :config="item"
+          v-model="value[index]"
+        />
       </form-item>
     </template>
     <form-item>
