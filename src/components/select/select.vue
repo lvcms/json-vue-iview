@@ -13,7 +13,19 @@
     :label="label"
     :size="size"
     :placeholder="placeholder"
+    :not-found-text="notFoundText"
+    :label-in-value="labelInValue"
+    :transfer="transfer"
+    :element-id="elementId"
   >
+   <Option
+     v-for="(option, index, key) in options"
+     :value="option.value"
+     :label="option.label"
+     :disabled="option.disabled"
+     :key="option.value"
+   >
+  </Option>
   </Select>
 </template>
 
@@ -35,7 +47,7 @@ export default {
      */
     currentValue: {
       get() {
-        return this.value? this.value: this.config.default
+        return this.value? this.value: []
       },
       set(newValue) {
         this.$emit('input', newValue)
@@ -105,11 +117,11 @@ export default {
       return this.config.label? this.config.label: ''
     },
     /**
-     * [label 选择框大小，可选值为large、small、default或者不填]
+     * [size 选择框大小，可选值为large、small、default或者不填]
      * @return {[String]} [description]
      */
     size() {
-      return this.config.size? this.config.size: ''
+      return this.config.size? this.config.size: 'default'
     },
     /**
      * [placeholder 选择框默认文字]
@@ -117,18 +129,53 @@ export default {
      */
     placeholder() {
       return this.config.placeholder? this.config.placeholder: '请选择'
-    }
+    },
+    /**
+     * [notFoundText 选择框默认文字]
+     * @return {[String]} [description]
+     */
+    notFoundText() {
+      return this.config.notFoundText? this.config.notFoundText: '无匹配数据'
+    },
+    /**
+     * [labelInValue 在返回选项时，是否将 label 和 value 一并返回，默认只返回 value]
+     * @return {[Boolean]} [description]
+     */
+    labelInValue() {
+      return this.config.labelInValue? this.labelInValue.labelInValue: false
+    },
+    /**
+     * [transfer 是否将弹层放置于 body 内，在 Tabs、带有 fixed 的 Table 列内使用时，建议添加此属性，它将不受父级样式影响，从而达到更好的效果]
+     * @return {[Boolean]} [description]
+     */
+    transfer() {
+      return this.config.transfer? this.labelInValue.transfer: false
+    },
+    /**
+     * [elementId 给表单元素设置 id，详见 Form 用法。]
+     * @return {[String]} [description]
+     */
+    elementId() {
+      return this.config.elementId? this.config.elementId: ''
+    },
+
+    /**
+     * [options Radio props]
+     * @return {[Object]} [description]
+     */
+    options() {
+      return this.config.options? this.config.options: {}
+    },
   },
   methods: {
     remoteMethod(query) {
       if (query !== '') {
         } else {
-          // this.options = [];
+          this.options = [];
         }
     }
   },
   mounted() {
-    // console.log(this.config);
   }
 }
 </script>
