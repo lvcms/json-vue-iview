@@ -146,19 +146,20 @@ export default {
      * @type {Object}
      */
     buttonSubmit() {
-      return this.layout.config.buttonSubmit? this.layout.config.buttonSubmit: {
+      let buttonSubmit = {
         hidden: false,
         disabled: false,
         type: 'primary',
         title: '提交'
       }
+      return this.layout.config.buttonSubmit? Object.assign(buttonSubmit, this.layout.config.buttonSubmit): buttonSubmit
     },
     /**
      * [buttonSubmit 提交按钮]
      * @type {Object}
      */
     buttonReset() {
-      return this.layout.config.buttonReset? this.layout.config.buttonReset: {
+      let buttonReset = {
         hidden: false,
         disabled: false,
         type: 'ghost',
@@ -167,6 +168,8 @@ export default {
           marginLeft: '3vh'
         }
       }
+      return this.layout.config.buttonReset? Object.assign(buttonReset, this.layout.config.buttonReset): buttonReset
+
     }
   },
   created () {
