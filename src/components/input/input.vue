@@ -18,7 +18,20 @@
       :spellcheck="spellcheck"
       :wrap="wrap"
       :style="style"
-    />
+    >
+      <span slot="prepend" v-if="prepend">
+        <i v-if="prepend.icon" :class="prepend.icon"></i>
+        <span v-else>
+          {{prepend}}
+        </span>
+      </span>
+      <span slot="append" v-if="append">
+        <i v-if="append.icon" :class="append.icon"></i>
+        <span v-else>
+          {{append}}
+        </span>
+      </span>
+    </i-input>
 </template>
 
 <script>
@@ -164,6 +177,20 @@ export default {
     style() {
       return this.config.style? this.config.style: {}
     },
+    /**
+     * [prepend 前置内容，仅在 text 类型下有效]
+     * @return {[String | Object]} [description]
+     */
+    prepend() {
+      return this.config.prepend? this.config.prepend: false
+    },
+    /**
+     * [append 后置内容，仅在 text 类型下有效]
+     * @return {[String | Object]} [description]
+     */
+    append() {
+      return this.config.append? this.config.append: false
+    }
   },
   mounted() {
     // console.log(this.config);
@@ -171,5 +198,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+  i{
+     width:14px;
+     height:14px;
+  }
 </style>
