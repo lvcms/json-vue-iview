@@ -124,6 +124,8 @@
           fetchPolicy: 'network-only',
         }).then((result) => {
           this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
+        }).catch((result) => {
+          this.itemValue = {}
         })
       },
       /**
