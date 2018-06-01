@@ -151,6 +151,9 @@
           },
         }).then((result) => {
           this.$Message.success(result.data.updateModel.message)
+        }).catch((error) => {
+          console.log(error)
+          this.$Message.error('未知系统错误')
         })
       }
     },
