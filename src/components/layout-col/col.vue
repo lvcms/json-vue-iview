@@ -47,8 +47,10 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   import Cache from 'lf-cache'
   import gql from 'graphql-tag'
+
   export default {
     name: 'jvi-col',
     components: {
@@ -100,6 +102,9 @@
       },
     },
     methods: {
+      ...mapActions([
+        'callbackData' // map `this.callbackData(result)` to `this.$store.dispatch('callbackData', result)`
+      ]),
       getItem() {
         /**
          * [ 根据当前项目名称异步获取 layout 数据 ]
@@ -156,9 +161,11 @@
           }else{
             this.$Message.error(result.data.updateModel.message)
           }
+          this.callbackData(result)
         }).catch((error) => {
           console.log(error)
           this.$Message.error('未知系统错误')
+          this.callbackData(error)
         })
       }
     },
