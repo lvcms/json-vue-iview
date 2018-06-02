@@ -150,7 +150,12 @@
             value: JSON.stringify(this.itemValue)
           },
         }).then((result) => {
-          this.$Message.success(result.data.updateModel.message)
+          let status = result.data.updateModel.status
+          if (status == 200) {
+            this.$Message.success(result.data.updateModel.message)
+          }else{
+            this.$Message.error(result.data.updateModel.message)
+          }
         }).catch((error) => {
           console.log(error)
           this.$Message.error('未知系统错误')
