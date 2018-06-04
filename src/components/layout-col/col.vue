@@ -163,6 +163,7 @@
           }else{
             this.$Message.error(result.data.updateModel.message)
           }
+          this.$event.$emit('bigrocs', result);
           this.thenHandle(result)
         }).catch((error) => {
           this.catchHandle(error)
