@@ -103,7 +103,8 @@
     },
     methods: {
       ...mapActions([
-        'callbackData' // map `this.callbackData(result)` to `this.$store.dispatch('callbackData', result)`
+        'thenHandle', // map `this.callbackData(result)` to `this.$store.dispatch('callbackData', result)`
+        'catchHandle',
       ]),
       getItem() {
         /**
@@ -131,6 +132,7 @@
           this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
         }).catch((result) => {
           this.itemValue = {}
+
         })
       },
       /**
@@ -161,11 +163,9 @@
           }else{
             this.$Message.error(result.data.updateModel.message)
           }
-          this.callbackData(result)
+          this.thenHandle(result)
         }).catch((error) => {
-          console.log(error)
-          this.$Message.error('未知系统错误')
-          this.callbackData(error)
+          this.catchHandle(error)
         })
       }
     },
