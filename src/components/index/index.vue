@@ -47,6 +47,9 @@
           return apollo.data.model
         } , 60*24*7).then((data) => {
           this.layout = data.layout
+          this.$event.$emit('model-layout-then', data);
+        }).catch((error) => {
+          this.$event.$emit('model-layout-catch', error);
         })
       }
     }
