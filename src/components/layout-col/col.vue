@@ -130,9 +130,9 @@
           fetchPolicy: 'network-only',
         }).then((result) => {
           this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
-        }).catch((result) => {
+        }).catch((error) => {
+          console.log(error);
           this.itemValue = {}
-
         })
       },
       /**

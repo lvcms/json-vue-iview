@@ -56,7 +56,7 @@ export default {
      */
     currentValue: {
       get() {
-        return this.value? this.value: this.config.default
+        return this.value? this.value: []
       },
       set(newValue) {
         this.$emit('input', newValue)
