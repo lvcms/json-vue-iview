@@ -157,16 +157,10 @@
             value: JSON.stringify(this.itemValue)
           },
         }).then((result) => {
-          let status = result.data.updateModel.status
-          if (status == 200) {
-            this.$Message.success(result.data.updateModel.message)
-          }else{
-            this.$Message.error(result.data.updateModel.message)
-          }
-          this.$event.$emit('bigrocs', result);
-          this.thenHandle(result)
+          this.$Message.success(result.data.updateModel.message)
+          this.$event.$emit('form-submit-then', result);
         }).catch((error) => {
-          this.catchHandle(error)
+          this.$event.$emit('form-submit-catch', error);
         })
       }
     },
