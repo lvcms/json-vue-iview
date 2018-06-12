@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   import Cache from 'lf-cache'
   import gql from 'graphql-tag'
   export default {
@@ -30,6 +31,9 @@
       this.initJson()
     },
     methods: {
+      ...mapActions([
+        'graphqlError',
+      ]),
       initJson(){
         Cache.remember(this.$route.name+":layout", async () => {
           let apollo = await this.$apollo.query({
@@ -49,6 +53,9 @@
           this.layout = data.layout
           this.$event.$emit('model-layout-then', data);
         }).catch((error) => {
+          this.graphqlError(error.message).then( message => {
+            this.$Message.error(message)
+          })
           this.$event.$emit('model-layout-catch', error);
         })
       }
