@@ -93,6 +93,12 @@
          * [ 比如 form 组件 table 组件 ]
          */
         return this.item.style? this.item.style: false
+      },
+      /**
+       * 是否需要获取项目 vlaue
+       */
+      isValue() {
+        return (typeof(this.item.isValue) == "undefined")? true: this.item.isValue
       }
     },
     watch: {
@@ -112,6 +118,11 @@
          */
         Cache.get(this.$route.name+":layout").then((data) => {
           this.item = data.item[this.itemName]
+          if (this.isValue) {
+            this.getItemValue()
+          }else{
+            this.itemValue = {}
+          }
         })
       },
       getItemValue() {
@@ -172,7 +183,6 @@
     },
     mounted() {
       this.getItem()
-      this.getItemValue()
     }
   }
 </script>
