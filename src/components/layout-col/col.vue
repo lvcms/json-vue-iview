@@ -103,7 +103,7 @@
     },
     methods: {
       ...mapActions([
-        'graphqlError', // map `this.callbackData(result)` to `this.$store.dispatch('callbackData', result)`
+        'graphqlError',
       ]),
       getItem() {
         /**
@@ -133,6 +133,7 @@
           this.graphqlError(error.message).then( message => {
             this.$Message.error(message)
           })
+          console.error(error);
           this.itemValue = {}
         })
       },
@@ -164,6 +165,7 @@
           this.graphqlError(error.message).then( message => {
             this.$Message.error(message)
           })
+          console.error(error);
           this.$event.$emit('form-submit-catch', error);
         })
       }
