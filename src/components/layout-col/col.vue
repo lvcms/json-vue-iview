@@ -103,8 +103,7 @@
     },
     methods: {
       ...mapActions([
-        'thenHandle', // map `this.callbackData(result)` to `this.$store.dispatch('callbackData', result)`
-        'catchHandle',
+        'graphqlError', // map `this.callbackData(result)` to `this.$store.dispatch('callbackData', result)`
       ]),
       getItem() {
         /**
@@ -131,7 +130,9 @@
         }).then((result) => {
           this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
         }).catch((error) => {
-          console.log(error);
+          this.graphqlError(error.message).then( message => {
+            this.$Message.error(message)
+          })
           this.itemValue = {}
         })
       },
@@ -160,6 +161,9 @@
           this.$Message.success(result.data.updateModel.message)
           this.$event.$emit('form-submit-then', result);
         }).catch((error) => {
+          this.graphqlError(error.message).then( message => {
+            this.$Message.error(message)
+          })
           this.$event.$emit('form-submit-catch', error);
         })
       }
