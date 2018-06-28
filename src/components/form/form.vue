@@ -48,6 +48,11 @@
           :config="item"
           v-model="value[index]"
         />
+        <jvi-upload
+          v-if="item.component=='upload'"
+          :config="item"
+          v-model="value[index]"
+        />
       </form-item>
     </template>
     <form-item>
