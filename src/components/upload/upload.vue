@@ -1,9 +1,27 @@
 <template>
-    <i-input
-      v-model="currentValue"
+    <upload
+      :action=""
+      :headers=""
+      :multiple=""
+      :data=""
+      :name=""
+      :with-credentials=""
+      :show-upload-list=""
+      :type=""
+      :accept=""
+      :max-size=""
+      :before-upload=""
+      :on-progress=""
+      :on-success=""
+      :on-error=""
+      :on-preview=""
+      :on-remove=""
+      :on-format-error=""
+      :on-exceeded-size="handleMaxSize"
+      :default-file-list="defaultList"
     >
-    123
-    </i-input>
+        <i-button type="ghost" icon="ios-cloud-upload-outline">Upload files</i-button>
+    </upload>
 </template>
 
 <script>
@@ -29,6 +47,24 @@ export default {
       set(newValue) {
         this.$emit('input', newValue)
       }
+    },
+    /**
+     * [defaultList 设置属性 default-file-list 设置默认已上传的列表。]
+     * @return {[Array]} [description]
+     */
+    defaultList() {
+      return this.config.defaultList? this.config.defaultList: []
+    },
+  },
+  methods: {
+    /**
+     * 上传文件超过大小设置提示
+     */
+    handleMaxSize (file) {
+        this.$Notice.warning({
+            title: 'Exceeding file size limit',
+            desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+        });
     },
   },
   mounted() {
