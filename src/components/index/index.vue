@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <jvi-row
-      v-for="(row, index, key) in layout"
+      v-for="(row, index) in layout"
       :row="row"
       :key="index"
     />

@@ -12,7 +12,7 @@
   >
     <subCol
       v-if="content instanceof Array"
-      v-for="(value, index, key) in content"
+      v-for="(value, index) in content"
       :col="value"
       :key="index"
     />

@@ -11,10 +11,12 @@
       <jvi-col
        v-if="item.style=='col'"
        :col="item"
+       :key="key"
       />
       <subRow
         v-if="item.style=='row'"
         :row="item"
+        :key="key"
       />
     </template>
   </Row>
