@@ -1,5 +1,5 @@
 <template>
-  <Col
+  <i-col
     :span="config.span"
     :order="config.order"
     :offset="config.offset"
@@ -43,7 +43,7 @@
           <div>Loading</div>
       </Spin>
     </Card>
-  </Col>
+  </i-col>
 </template>
 
 <script>
