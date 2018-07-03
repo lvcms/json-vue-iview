@@ -1,28 +1,31 @@
 <template>
     <upload
-      :action=""
-      :headers=""
-      :multiple=""
-      :data=""
-      :name=""
-      :with-credentials=""
-      :show-upload-list=""
-      :type=""
-      :accept=""
-      :max-size=""
-      :before-upload=""
-      :on-progress=""
-      :on-success=""
-      :on-error=""
-      :on-preview=""
-      :on-remove=""
-      :on-format-error=""
-      :on-exceeded-size="handleMaxSize"
+      :action="action"
+      :headers="headers"
+      :multiple="multiple"
+      :data="data"
+
       :default-file-list="defaultList"
     >
-        <i-button type="ghost" icon="ios-cloud-upload-outline">Upload files</i-button>
+      <i-button type="ghost" icon="ios-cloud-upload-outline">Upload files</i-button>
     </upload>
 </template>
+
+      // :data=""
+      // :name=""
+      // :with-credentials=""
+      // :show-upload-list=""
+      // :type=""
+      // :accept=""
+      // :max-size=""
+      // :before-upload=""
+      // :on-progress=""
+      // :on-success=""
+      // :on-error=""
+      // :on-preview=""
+      // :on-remove=""
+      // :on-format-error=""
+      // :on-exceeded-size="handleMaxSize"
 
 <script>
 export default {
@@ -46,6 +49,44 @@ export default {
       },
       set(newValue) {
         this.$emit('input', newValue)
+      }
+    },
+    /**
+     * [package 当前操作包 ]
+     * @return {[String]} [description]
+     */
+    package() {
+        return this.$route.name.split(":")[0]
+    },
+    /**
+     * [action 上传的地址，必填 ]
+     * @return {[String]} [description]
+     */
+    action() {
+      return this.config.action? this.config.action: '/'
+    },
+    /**
+     * [headers 设置上传的请求头部 ]
+     * @return {[String]} [description]
+     */
+    headers() {
+      return {}
+    },
+    /**
+     * [multiple 是否支持多选文件 ]
+     * @return {[Boolean]} [description]
+     */
+    multiple() {
+      return this.config.multiple? this.config.multiple: false
+    },
+    /**
+     * [data 	上传时附带的额外参数 ]
+     * @return {[Boolean]} [description]
+     */
+    data() {
+      return {
+        'type': this.config.type? this.config.type: 'file',
+        'package': this.package? this.package: ''
       }
     },
     /**
