@@ -4,6 +4,12 @@
       :headers="headers"
       :multiple="multiple"
       :data="data"
+      :name="name"
+      :with-credentials="withCredentials"
+      :show-upload-list="showUploadList"
+      :type="type"
+      :accept="accept"
+      :format="format"
 
       :default-file-list="defaultList"
     >
@@ -11,11 +17,6 @@
     </upload>
 </template>
 
-      // :data=""
-      // :name=""
-      // :with-credentials=""
-      // :show-upload-list=""
-      // :type=""
       // :accept=""
       // :max-size=""
       // :before-upload=""
@@ -85,9 +86,51 @@ export default {
      */
     data() {
       return {
-        'type': this.config.type? this.config.type: 'file',
+        'fileType': this.config.fileType? this.config.fileType: 'file',
         'package': this.package? this.package: ''
       }
+    },
+    /**
+     * [name 	上传的文件字段名 ]
+     * @return {[String]} [description]
+     */
+    name() {
+      return this.config.name? this.config.name: 'file'
+    },
+    /**
+     * [withCredentials 支持发送 cookie 凭证信息 ]
+     * @return {[Boolean]} [description]
+     */
+    withCredentials() {
+      return this.config.withCredentials? this.config.withCredentials: false
+    },
+    /**
+     * [showUploadList 是否显示已上传文件列表 ]
+     * @return {[Boolean]} [description]
+     */
+    showUploadList() {
+      return this.config.showUploadList? this.config.showUploadList: true
+    },
+    /**
+     * [type 上传控件的类型，可选值为 select（点击选择），drag（支持拖拽） ]
+     * @return {[String]} [description]
+     */
+    type() {
+      return this.config.type? this.config.type: 'select'
+    },
+    /**
+     * [accept 接受上传的文件类型 ]
+     * @return {[String]} [description]
+     */
+    accept() {
+      return '.'+this.format.join(",.")
+    },
+    /**
+     * [format 支持的文件类型，与 accept 不同的是，format 是识别文件的后缀名，accept 为 input 标签原生的 accept 属性，会在选择文件时过滤，可以两者结合使用 ]
+     * @return {[Array]} [description]
+     */
+    format() {
+      return this.config.format? this.config.format.split(","): []
     },
     /**
      * [defaultList 设置属性 default-file-list 设置默认已上传的列表。]

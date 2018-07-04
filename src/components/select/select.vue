@@ -19,7 +19,7 @@
     :element-id="elementId"
   >
    <Option
-     v-for="(option, index, key) in options"
+     v-for="option in options"
      :value="option.value"
      :label="option.label"
      :disabled="option.disabled"
