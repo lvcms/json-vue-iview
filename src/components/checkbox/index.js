@@ -1,2 +1,2 @@
-import Index from './checkbox.vue';
-export default Index;
+import Index from './checkbox.vue'
+export default Index

@@ -23,6 +23,7 @@
           :size="option.size"
           :true-value="option.trueValue"
           :false-value="option.falseValue"
+          :key="key"
         >
           <i :class="option.icon"></i>
           <span>{{ option.title }}</span>
