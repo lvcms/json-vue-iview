@@ -3,6 +3,7 @@ import Index from './components/index'
 // layout
 import Row from './components/layout-row'
 import Col from './components/layout-col'
+import Item from './components/item'
 
 import Form from './components/form'
 
@@ -13,28 +14,25 @@ import Checkbox from './components/checkbox'
 import Select from './components/select'
 import Upload from './components/upload'
 
-
 import Vue from 'vue'
 
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 
 Vue.use(iView)
 
 const components = [
   Index,
-
   Row,
   Col,
-
+  Item,
   Form,
-
   Input,
   Switch,
   Radio,
   Checkbox,
   Select,
-  Upload,
+  Upload
 ]
 
 const install = function (Vue, opts = {}) {

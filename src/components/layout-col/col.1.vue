@@ -10,39 +10,21 @@
     :md="config.md"
     :lg="config.lg"
   >
-    <subCol
-      v-if="content instanceof Array"
+    <template
       v-for="(value, index) in content"
-      :col="value"
-      :key="index"
-    />
-    <Card
-      v-if="content.style"
-      :style="config.style"
     >
-      <p
-        v-if="card"
-        slot="title"
-      >
-        <i :class="card.icon"></i>
-        {{ card.title }}
-      </p>
-      <template v-if="itemValue">
-        <jvi-form
-          v-if="itemStyle=='form'"
-          :layout="item"
-          :value="itemValue"
-          @form-submit="handleFormSubmit"
-        />
-      </template>
-      <Spin
-        v-else
-        fix
-      >
-          <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
-          <div>Loading</div>
-      </Spin>
-    </Card>
+
+      <jvi-itme
+        v-if="value.style == 'itme'"
+        :value="value"
+        :key="index"
+      />
+      <subCol
+        v-if="value.style == 'col'"
+        :col="value"
+        :key="index"
+      />
+    </template>
   </i-col>
 </template>
 
@@ -52,7 +34,7 @@
   import gql from 'graphql-tag'
 
   export default {
-    name: 'jvi-itme',
+    name: 'jvi-col',
     components: {
       subCol: () => import('./col.vue')
     },
