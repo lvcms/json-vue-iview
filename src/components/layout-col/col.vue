@@ -37,10 +37,10 @@
       col: Object
     },
     computed: {
-       /**
-     * [config 获取 col 配置]
-     * @return {[String]} [description]
-     */
+      /**
+       * [config 获取 col 配置]
+       * @return {[Object]} [description]
+       */
       config() {
         return this.col.config
       },
