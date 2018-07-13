@@ -138,7 +138,7 @@
             this.graphqlError(error.message).then( message => {
               this.$Message.error(message)
             })
-            console.error(error);
+            console.error(error)
             this.itemValue = {}
           })
         }else{
