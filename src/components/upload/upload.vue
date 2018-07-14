@@ -18,8 +18,13 @@
       :default-file-list="defaultList"
     >
       <div class="cloud-upload">
-        <Icon type="ios-cloud-upload" size="57" class="ios-cloud-upload"></Icon>
-        <p>点击或拖动文件在这里上传</p>
+        <img v-if="imageUrl"
+          :src="imageUrl"
+        >
+        <span v-else>
+          <Icon type="ios-cloud-upload" size="57" class="ios-cloud-upload"></Icon>
+          <p>点击或拖动文件在这里上传</p>
+        </span>
       </div>
     </upload>
 </template>
@@ -51,6 +56,12 @@ export default {
       set(newValue) {
         this.$emit('input', newValue)
       }
+    },
+    imageUrl() {
+      if (this.newImageUrl && this.config.value!=this.value) {
+        return this.newImageUrl
+      }
+      return this.config.imageUrl
     },
     /**
      * [package 当前操作包 ]
@@ -172,7 +183,7 @@ export default {
         if (res.type=="success") {
           this.currentValue = res.value.id;
           if (this.config.fileType == 'image') {
-            console.log(res);
+            this.newImageUrl = res.value.url
           }
         }
         this.$Notice.success({
@@ -198,11 +209,17 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .cloud-upload{
-    padding: 37px 0 20px 0
-  }
   .ios-cloud-upload{
     color: #3399ff;
     margin-left:-27px;
+    margin-top: 2vh;
+  }
+  .cloud-upload{
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+    max-width: 100%;
+    height: auto;
+    padding:0.07in;
   }
 </style>
