@@ -10,24 +10,19 @@
       :type="type"
       :accept="accept"
       :format="format"
+      :max-size="maxSize"
+      :on-exceeded-size="handleMaxSize"
+      :on-format-error="handleFormatError"
+      :on-success="handleSuccess"
 
       :default-file-list="defaultList"
     >
-      <i-button type="ghost" icon="ios-cloud-upload-outline">Upload files</i-button>
+      <div class="cloud-upload">
+        <Icon type="ios-cloud-upload" size="57" class="ios-cloud-upload"></Icon>
+        <p>点击或拖动文件在这里上传</p>
+      </div>
     </upload>
 </template>
-
-      // :accept=""
-      // :max-size=""
-      // :before-upload=""
-      // :on-progress=""
-      // :on-success=""
-      // :on-error=""
-      // :on-preview=""
-      // :on-remove=""
-      // :on-format-error=""
-      // :on-exceeded-size="handleMaxSize"
-
 <script>
 export default {
   name: 'jvi-upload',
@@ -36,8 +31,13 @@ export default {
         type: Object,
     },
     value: {
-        type: [String, Number],
+        type: [String,Number],
     },
+  },
+  data() {
+    return {
+      newImageUrl:null,
+    };
   },
   computed: {
     /**
@@ -64,7 +64,7 @@ export default {
      * @return {[String]} [description]
      */
     action() {
-      return this.config.action? this.config.action: '/'
+      return this.config.hasOwnProperty('action')? this.config.action: '/'
     },
     /**
      * [headers 设置上传的请求头部 ]
@@ -78,7 +78,7 @@ export default {
      * @return {[Boolean]} [description]
      */
     multiple() {
-      return this.config.multiple? this.config.multiple: false
+      return this.config.hasOwnProperty('multiple')? this.config.multiple: false
     },
     /**
      * [data 	上传时附带的额外参数 ]
@@ -86,8 +86,8 @@ export default {
      */
     data() {
       return {
-        'fileType': this.config.fileType? this.config.fileType: 'file',
-        'package': this.package? this.package: ''
+        'fileType': this.config.hasOwnProperty('fileType')? this.config.fileType: 'file',
+        'package': this.hasOwnProperty('package')? this.package: ''
       }
     },
     /**
@@ -95,28 +95,28 @@ export default {
      * @return {[String]} [description]
      */
     name() {
-      return this.config.name? this.config.name: 'file'
+      return this.config.hasOwnProperty('name')? this.config.name: 'file'
     },
     /**
      * [withCredentials 支持发送 cookie 凭证信息 ]
      * @return {[Boolean]} [description]
      */
     withCredentials() {
-      return this.config.withCredentials? this.config.withCredentials: false
+      return this.config.hasOwnProperty('withCredentials')? this.config.withCredentials: false
     },
     /**
      * [showUploadList 是否显示已上传文件列表 ]
      * @return {[Boolean]} [description]
      */
     showUploadList() {
-      return this.config.showUploadList? this.config.showUploadList: true
+      return this.config.hasOwnProperty('showUploadList')? this.config.showUploadList: true
     },
     /**
      * [type 上传控件的类型，可选值为 select（点击选择），drag（支持拖拽） ]
      * @return {[String]} [description]
      */
     type() {
-      return this.config.type? this.config.type: 'select'
+      return this.config.hasOwnProperty('type')? this.config.type: 'select'
     },
     /**
      * [accept 接受上传的文件类型 ]
@@ -130,26 +130,67 @@ export default {
      * @return {[Array]} [description]
      */
     format() {
-      return this.config.format? this.config.format.split(","): []
+      return this.config.hasOwnProperty('format')? this.config.format.split(","): []
     },
     /**
      * [defaultList 设置属性 default-file-list 设置默认已上传的列表。]
      * @return {[Array]} [description]
      */
     defaultList() {
-      return this.config.defaultList? this.config.defaultList: []
+      return this.config.hasOwnProperty('defaultList')? this.config.defaultList: []
     },
+    /**
+     * [maxSize 文件大小限制，单位 kb]
+     * @return {[Number]} [description]
+     */
+    maxSize() {
+      return this.config.hasOwnProperty('maxSize')? this.config.maxSize: null
+    },
+
   },
   methods: {
+    /**
+     * 上传文件格式错误提示
+     */
+    handleFormatError (file) {
+      this.$Notice.warning({
+          title: '文件格式不正确',
+          desc: file.name + ' 的文件格式不正确，请选择 '+this.format+' 等格式文件。'
+      });
+    },
     /**
      * 上传文件超过大小设置提示
      */
     handleMaxSize (file) {
-        this.$Notice.warning({
-            title: 'Exceeding file size limit',
-            desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-        });
+      this.$Notice.warning({
+        title: '文件超过大小限制',
+        desc: '文件  ' + file.name + ' 太大，不能超过 '+this.bytesToSize(this.maxSize)+' 。'
+      });
     },
+    handleSuccess (res, file) {
+      /* [if 上传成功定义显示图片赋值ID]*/
+        if (res.type=="success") {
+          this.currentValue = res.value.id;
+          if (this.config.fileType == 'image') {
+            console.log(res);
+          }
+        }
+        this.$Notice.success({
+          title: res.message,
+          desc: '文件  ' + file.name + ' 上传成功！ '
+        });
+
+    },
+    /**
+    * 文件大小计算
+    */
+    bytesToSize (bytes) {
+      if (bytes === 0) return '0 KB'
+      let k = 1024 // or 1024
+      let sizes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+      let i = Math.floor(Math.log(bytes) / Math.log(k))
+      return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+    }
   },
   mounted() {
     // console.log(this.config);
@@ -157,8 +198,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  i{
-     width:14px;
-     height:14px;
+  .cloud-upload{
+    padding: 37px 0 20px 0
+  }
+  .ios-cloud-upload{
+    color: #3399ff;
+    margin-left:-27px;
   }
 </style>

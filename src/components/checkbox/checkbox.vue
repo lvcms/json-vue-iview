@@ -68,21 +68,21 @@ export default {
      * @return {[String]} [description]
      */
     type() {
-      return this.config.type? this.config.type: null
+      return this.config.hasOwnProperty('type')? this.config.type: null
     },
     /**
      * [size 尺寸，可选值为large、small、default或者不设置]
      * @return {[String]} [description]
      */
     size() {
-      return this.config.size? this.config.size: null
+      return this.config.hasOwnProperty('size')? this.config.size: null
     },
     /**
      * [options Radio props]
      * @return {[Object]} [description]
      */
     options() {
-      return this.config.options? this.config.options: {}
+      return this.config.hasOwnProperty('options')? this.config.options: {}
     },
     /**
      * [optionLabels 根据配置获取全选后的 label ]
@@ -96,14 +96,14 @@ export default {
      * @return {[Boolean]} [description]
      */
     allSelect() {
-      return this.config.allSelect? this.config.allSelect: false
+      return this.config.hasOwnProperty('allSelect')? this.config.allSelect: false
     },
     /**
      * [allSelectName 全选名称]
      * @return {[String]} [description]
      */
     allSelectName() {
-      return this.config.allSelectName? this.config.allSelectName: '全选'
+      return this.config.hasOwnProperty('allSelectName')? this.config.allSelectName: '全选'
     }
   },
   methods: {
