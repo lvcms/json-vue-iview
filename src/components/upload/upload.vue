@@ -87,7 +87,7 @@ export default {
     data() {
       return {
         'fileType': this.config.hasOwnProperty('fileType')? this.config.fileType: 'file',
-        'package': this.hasOwnProperty('package')? this.package: ''
+        'package': this.package? this.package: ''
       }
     },
     /**
