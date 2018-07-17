@@ -36,7 +36,7 @@ export default {
         type: Object,
     },
     value: {
-        type: [String,Number],
+        type: [Object],
     },
   },
   data() {
@@ -57,11 +57,22 @@ export default {
         this.$emit('input', newValue)
       }
     },
+    /**
+     * [id 图片 id ]
+     * @return {[Number]} [description]
+     */
+    id() {
+      return this.value.hasOwnProperty('id')? this.value.id: 0
+    },
+    /**
+     * [imageUrl 图片 url ]
+     * @return {[String]} [description]
+     */
     imageUrl() {
-      if (this.newImageUrl && this.config.value!=this.value) {
+      if (this.newImageUrl) {
         return this.newImageUrl
       }
-      return this.config.imageUrl
+      return this.value.hasOwnProperty('imageUrl')? this.value.url: null
     },
     /**
      * [package 当前操作包 ]
