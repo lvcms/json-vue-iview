@@ -72,7 +72,7 @@ export default {
       if (this.newImageUrl) {
         return this.newImageUrl
       }
-      return this.value.hasOwnProperty('imageUrl')? this.value.url: null
+      return this.value.hasOwnProperty('url')? this.value.url: null
     },
     /**
      * [package 当前操作包 ]
