@@ -157,6 +157,7 @@
           variables: {
             package: this.package,
             model: this.model,
+            item: this.itemName,
             value: JSON.stringify(this.itemValue)
           },
         }).then((result) => {
