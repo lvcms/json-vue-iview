@@ -39,11 +39,6 @@ export default {
         type: [Object],
     },
   },
-  data() {
-    return {
-      newImageUrl:null,
-    };
-  },
   computed: {
     /**
      * [currentValue 绑定的值，可使用 v-model 双向绑定]
@@ -69,9 +64,6 @@ export default {
      * @return {[String]} [description]
      */
     imageUrl() {
-      if (this.newImageUrl) {
-        return this.newImageUrl
-      }
       return this.value.hasOwnProperty('url')? this.value.url: null
     },
     /**
@@ -192,10 +184,8 @@ export default {
     handleSuccess (res, file) {
       /* [if 上传成功定义显示图片赋值ID]*/
         if (res.type=="success") {
-          this.currentValue = res.value.id;
-          if (this.config.fileType == 'image') {
-            this.newImageUrl = res.value.url
-          }
+          this.currentValue.id = res.value.id
+          this.currentValue.url = res.value.url
         }
         this.$Notice.success({
           title: res.message,
