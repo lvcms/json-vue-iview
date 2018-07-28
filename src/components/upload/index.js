@@ -1,2 +1,2 @@
-import Index from './upload.vue';
-export default Index;
+import Index from './upload.vue'
+export default Index

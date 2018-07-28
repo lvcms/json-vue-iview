@@ -55,6 +55,13 @@
           v-model="value[index]"
         />
       </form-item>
+      <jvi-table
+        class="ivu-form-item"
+        v-if="item.component=='table'"
+        :config="item"
+        v-model="value[index]"
+        :key="key"
+      />
     </template>
     <form-item>
         <i-button

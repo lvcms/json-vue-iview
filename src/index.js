@@ -14,6 +14,8 @@ import Checkbox from './components/checkbox'
 import Select from './components/select'
 import Upload from './components/upload'
 
+import Table from './components/table'
+
 import Vue from 'vue'
 
 import iView from 'iview'
@@ -32,7 +34,8 @@ const components = [
   Radio,
   Checkbox,
   Select,
-  Upload
+  Upload,
+  Table
 ]
 
 const install = function (Vue, opts = {}) {
