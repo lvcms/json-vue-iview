@@ -95,15 +95,22 @@ export default {
   },
   props: {
       layout:{},
-      value:{}
+      value:{},
+      name: String,
   },
   computed: {
+    package() {
+      return this.$route.name.split(":")[0]
+    },
+    model() {
+      return this.$route.name.split(":")[1]
+    },
     ref() {
       /**
        * [ref 获取唯一标识]
        * @type {String}
        */
-      return this.layout.config.ref? this.layout.config.ref: null
+      return this.package+':'+this.model+':'+this.name
     },
     validate() {
       /**

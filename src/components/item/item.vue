@@ -17,6 +17,7 @@
           v-if="itemStyle=='form'"
           :layout="item"
           :value="itemValue"
+          :name="itemName"
           @form-submit="handleFormSubmit"
       />
     </template>
