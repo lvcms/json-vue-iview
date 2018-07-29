@@ -1,7 +1,7 @@
 <template>
   <i-table
     :columns="columns"
-    :data="value"
+    :data="values"
     :stripe="stripe"
     :border="border"
     :show-header="showHeader"
@@ -23,7 +23,7 @@ export default {
         type: Object,
     },
     value: {
-        type: [String, Number],
+        type: [Array, Object],
     },
   },
   computed: {
@@ -82,8 +82,8 @@ export default {
                     }
       ]
     },
-    value() {
-      return this.config.hasOwnProperty('value')? this.config.value: [
+    values() {
+      return this.config.hasOwnProperty('values')? this.config.values: [
         {
                         name: 'John Brown',
                         age: 18,
