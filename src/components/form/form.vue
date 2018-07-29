@@ -58,8 +58,9 @@
       <jvi-table
         class="ivu-form-item"
         v-if="item.component=='table'"
-        :config="item"
         v-model="value[index]"
+        :config="item"
+        :ref-table="ref+':'+index"
         :key="key"
       />
     </template>
