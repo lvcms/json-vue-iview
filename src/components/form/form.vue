@@ -22,7 +22,7 @@
         :rules="item.rules"
         :error="item.error"
         :show-message="item.showMessage"
-        :key="key"
+        :key="'form'+key"
       >
         <jvi-input
           v-if="item.component=='input'"
