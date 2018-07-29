@@ -9,8 +9,12 @@
     :height="height"
     :loading="loading"
     :disabled-hover="disabledHover"
-    size="small"
-    ref="table"
+    :highlight-row="highlightRow"
+    :row-class-name="rowClassName"
+    :size="size"
+    :no-data-text="noDataText"
+    :no-filtered-data-text="noFilteredDataText"
+    :ref="refTable"
   >
   </i-table>
 </template>
@@ -25,6 +29,7 @@ export default {
     value: {
         type: [Array, Object],
     },
+    refTable: String // table ref 全栈唯一识别符
   },
   computed: {
     /**
@@ -159,13 +164,71 @@ export default {
     disabledHover() {
       return this.config.hasOwnProperty('disabledHover')? this.config.disabledHover: false
     },
-
+    /**
+     * [highlightRow 禁用鼠标悬停时的高亮]
+     * @return {Boolean} [description]
+     */
+    highlightRow() {
+      return this.config.hasOwnProperty('highlightRow')? this.config.highlightRow: false
+    },
+    /**
+     * [size 表格尺寸，可选值为 large、small、default 或者不填]
+     * @return {[String]} [description]
+     */
+    size() {
+      return this.config.hasOwnProperty('size')? this.config.size: null
+    },
+    /**
+     * [noDataText 数据为空时显示的提示内容]
+     * @return {[String]} [description]
+     */
+    noDataText() {
+      return this.config.hasOwnProperty('noDataText')? this.config.noDataText: '暂无数据'
+    },
+    /**
+     * [noFilteredDataText 筛选数据为空时显示的提示内容]
+     * @return {[String]} [description]
+     */
+    noFilteredDataText() {
+      return this.config.hasOwnProperty('noFilteredDataText')? this.config.noFilteredDataText: '暂无筛选结果'
+    },
 
   },
+  methods: {
+    /** 表格行颜色 */
+    rowClassName (row, index) {
+      if (index === 0) {
+          return 'table-info';
+      } else if (index === 1) {
+          return 'table-success';
+      } else if (index === 2) {
+          return 'table-warning';
+      } else if (index === 3) {
+          return 'table-error';
+      }
+      return '';
+    }
+  },
   mounted() {
-    // console.log(this.config);
+    // console.log(this.refTable);
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  .ivu-table .table-info td{
+    background-color: #2db7f5;
+    color: #fff;
+  }
+  .ivu-table .table-success td{
+    background-color: #19be6b;
+    color: #fff;
+  }
+  .ivu-table .table-warning td{
+    background-color: #ff9900;
+    color: #fff;
+  }
+  .ivu-table .table-error td{
+    background-color: #ed4014;
+    color: #fff;
+  }
 </style>
