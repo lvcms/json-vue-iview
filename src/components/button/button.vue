@@ -5,7 +5,6 @@
     :size="size"
     :shape="shape"
     :long="long"
-    :style="style"
     :html-type="htmlType"
     :disabled="disabled"
     :loading="loading"
@@ -14,9 +13,10 @@
     :to="to"
     :replace="replace"
     :target="target"
-    @click="handleButtin()"
+    @click="handleButtin"
+    :style="style"
   >
-    {{buttonSubmit.title}}
+    {{title}}
   </i-button>
 </template>
 
@@ -118,10 +118,17 @@ export default {
     },
     /**
      * [target 相当于 a 链接的 target 属性]
-     * @return {Boolean} [description]
+     * @return {String} [description]
      */
     target() {
       return this.config.hasOwnProperty('target')? this.config.target: '_self'
+    },
+    /**
+     * [title 按钮显示标题内容]
+     * @return {String} [description]
+     */
+    title() {
+      return this.config.hasOwnProperty('title')? this.config.title: null
     },
     /**
      * [event 按钮点击事件]
