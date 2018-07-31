@@ -1,6 +1,6 @@
 <template>
   <i-form
-    :ref="ref"
+    :ref="refName"
     :model="value"
     :rules="validate"
     :inline="inline"
@@ -60,7 +60,7 @@
         v-if="item.component=='table'"
         v-model="value[index]"
         :config="item"
-        :ref-table="ref+':'+index"
+        :ref-table="refName+':'+index"
         :key="key"
       />
     </template>
@@ -70,7 +70,7 @@
           :type="buttonSubmit.type"
           :style="buttonSubmit.style"
           :disabled="buttonSubmit.disabled"
-          @click="handleSubmit(ref)"
+          @click="handleSubmit(refName)"
         >
           {{buttonSubmit.title}}
         </i-button>
@@ -79,7 +79,7 @@
           :type="buttonReset.type"
           :style="buttonReset.style"
           :disabled="buttonReset.disabled"
-          @click="handleReset(ref)"
+          @click="handleReset(refName)"
         >
           {{buttonReset.title}}
         </i-button>
@@ -106,7 +106,7 @@ export default {
     model() {
       return this.$route.name.split(":")[1]
     },
-    ref() {
+    refName() {
       /**
        * [ref 获取唯一标识]
        * @type {String}
@@ -193,9 +193,22 @@ export default {
 
     }
   },
-  created () {
+  created() {
+    this.eventOn()
+  },
+  beforeDestroy() {
+    this.$event.$off('buttin-event')
   },
   methods: {
+    /**
+    * [eventOn 事件监听]
+    * @return {[type]} [description]
+    */
+    eventOn() {
+        this.$event.$on('buttin-event', result => {
+          console.log(result)
+        })
+    },
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
           if (valid) {
