@@ -24,11 +24,10 @@
 export default {
   name: 'jvi-button',
   props: {
-    config: {
-        type: Object,
-    },
+    config: Object,
     value: {
-        type: [Array, Object],
+      type: [String,Number],
+      default:null
     },
   },
   computed: {
@@ -132,16 +131,16 @@ export default {
     },
     /**
      * [event 按钮点击事件]
-     * @return {Boolean} [description]
+     * @return {String} [description]
      */
     event() {
       return this.config.hasOwnProperty('event')? this.config.event: null
-    },
+    }
 
   },
   methods: {
     handleButtin() {
-      this.$event.$emit('buttin-event', this.event);
+      this.$event.$emit('buttin-event', this.event, this.value);
     }
   },
   mounted() {
