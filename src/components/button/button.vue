@@ -26,8 +26,8 @@ export default {
   props: {
     config: Object,
     value: {
-      type: [String,Number],
-      default:null
+      type: [String,Number,Object],
+      default:null // 传入 value 值 例：当前操作数据 id
     },
   },
   computed: {
@@ -140,7 +140,10 @@ export default {
   },
   methods: {
     handleButtin() {
-      this.$event.$emit('buttin-event', this.event, this.value);
+      this.$event.$emit('buttin-event', {
+        name: this.event,
+        value: this.value
+      });
     }
   },
   mounted() {
