@@ -56,34 +56,21 @@
         />
       </form-item>
       <jvi-table
-        class="ivu-form-item"
         v-if="item.component=='table'"
         v-model="value[index]"
         :config="item"
         :ref-table="refName+':'+index"
         :key="key"
       />
+      <jvi-button
+        v-if="item.component=='button'"
+        :config="item"
+        :key="key"
+        :params="{
+          ref: refName
+        }"
+      />
     </template>
-    <form-item>
-        <i-button
-          v-if="!buttonSubmit.hidden"
-          :type="buttonSubmit.type"
-          :style="buttonSubmit.style"
-          :disabled="buttonSubmit.disabled"
-          @click="handleSubmit(refName)"
-        >
-          {{buttonSubmit.title}}
-        </i-button>
-        <i-button
-          v-if="!buttonReset.hidden"
-          :type="buttonReset.type"
-          :style="buttonReset.style"
-          :disabled="buttonReset.disabled"
-          @click="handleReset(refName)"
-        >
-          {{buttonReset.title}}
-        </i-button>
-    </form-item>
   </i-form>
 </template>
 
@@ -162,36 +149,6 @@ export default {
        */
       return this.layout.item? this.layout.item: {}
     },
-    /**
-     * [buttonSubmit 提交按钮]
-     * @type {Object}
-     */
-    buttonSubmit() {
-      let buttonSubmit = {
-        hidden: false,
-        disabled: false,
-        type: 'primary',
-        title: '提交'
-      }
-      return this.layout.config.buttonSubmit? Object.assign(buttonSubmit, this.layout.config.buttonSubmit): buttonSubmit
-    },
-    /**
-     * [buttonSubmit 提交按钮]
-     * @type {Object}
-     */
-    buttonReset() {
-      let buttonReset = {
-        hidden: false,
-        disabled: false,
-        type: 'ghost',
-        title: '重置',
-        style: {
-          marginLeft: '3vh'
-        }
-      }
-      return this.layout.config.buttonReset? Object.assign(buttonReset, this.layout.config.buttonReset): buttonReset
-
-    }
   },
   created() {
     this.eventOn()
@@ -205,12 +162,22 @@ export default {
     * @return {[type]} [description]
     */
     eventOn() {
-        this.$event.$on('buttin-event', result => {
-          console.log(result)
-        })
+      this.$event.$on('buttin-event', result => {
+        // 增加判断 ref 判断 防止操作其他定义 ref
+        if (result.params.ref === this.refName) {
+          switch (result.event) {
+            case 'formSubmit':
+              this.formSubmit()
+              break;
+            case 'formReset':
+              this.formReset()
+              break;
+          }
+        }
+      })
     },
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
+    formSubmit() {
+      this.$refs[this.refName].validate((valid) => {
           if (valid) {
               this.$emit('form-submit');
           } else {
@@ -219,8 +186,8 @@ export default {
           }
       })
     },
-    handleReset(name) {;
-      this.$refs[name].resetFields();
+    formReset() {;
+      this.$refs[this.refName].resetFields();
     }
   },
   mounted() {

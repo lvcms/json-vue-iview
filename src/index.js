@@ -7,6 +7,8 @@ import Item from './components/item'
 
 import Form from './components/form'
 
+import Button from './components/button'
+
 import Input from './components/input'
 import Switch from './components/switch'
 import Radio from './components/radio'
@@ -29,6 +31,7 @@ const components = [
   Col,
   Item,
   Form,
+  Button,
   Input,
   Switch,
   Radio,

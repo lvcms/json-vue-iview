@@ -25,12 +25,19 @@ export default {
   name: 'jvi-button',
   props: {
     config: Object,
-    value: {
+    params: {
       type: [String,Number,Object],
-      default:null // 传入 value 值 例：当前操作数据 id
+      default:null // 传入 params 值 例：当前操作数据 id
     },
   },
   computed: {
+    /**
+     * [style 自定义按钮样式 一般用于控制位置]
+     * @return {String} [description]
+     */
+    style() {
+      return this.config.hasOwnProperty('style')? this.config.type: {}
+    },
     /**
      * [type 按钮类型，可选值为 default、primary、dashed、text、info、success、warning、error或者不设置]
      * @return {String} [description]
@@ -141,8 +148,8 @@ export default {
   methods: {
     handleButtin() {
       this.$event.$emit('buttin-event', {
-        name: this.event,
-        value: this.value
+        event: this.event,
+        params: this.params
       });
     }
   },
