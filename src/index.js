@@ -17,6 +17,7 @@ import Select from './components/select'
 import Upload from './components/upload'
 
 import Table from './components/table'
+import AgGrid from './components/ag-grid'
 
 import Vue from 'vue'
 
@@ -38,7 +39,8 @@ const components = [
   Checkbox,
   Select,
   Upload,
-  Table
+  Table,
+  AgGrid
 ]
 
 const install = function (Vue, opts = {}) {
