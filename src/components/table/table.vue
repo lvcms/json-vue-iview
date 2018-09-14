@@ -34,7 +34,7 @@ export default {
   computed: {
     /**
      * [currentValue 绑定的值，可使用 v-model 双向绑定]
-     * @type {String | Number}
+     * @type {Array | Object}
      */
     currentValue: {
       get() {
