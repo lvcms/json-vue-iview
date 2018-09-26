@@ -55,13 +55,13 @@
           v-model="value[index]"
         />
       </form-item>
-      <!-- <jvi-table
+      <jvi-table
         v-if="item.component=='table'"
         v-model="value[index]"
         :config="item"
         :ref-table="refName+':'+index"
         :key="key"
-      /> -->
+      />
       <jvi-ag-grid
         v-if="item.component=='agGrid'"
         v-model="value[index]"

@@ -8,6 +8,7 @@
       :rowData="currentValue"
       :columnDefs="columns"
 
+      :localeText="localeText"
       :overlayLoadingTemplate="overlayLoadingTemplate"
     >
     </ag-grid-vue>
@@ -25,10 +26,16 @@ import 'ag-grid/dist/styles/ag-theme-balham.css'
  */
 import 'ag-grid-enterprise'
 import {AgGridVue} from 'ag-grid-vue'
+import Lang from './lang'
 export default {
   name: 'jvi-ag-grid',
   components: {
     AgGridVue
+  },
+  data () {
+    return {
+      localeText: Lang
+    }
   },
   props: {
     config: {
