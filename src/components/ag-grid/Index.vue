@@ -7,9 +7,10 @@
 
       :rowData="currentValue"
       :columnDefs="columns"
-
       :localeText="localeText"
       :overlayLoadingTemplate="overlayLoadingTemplate"
+      :suppressResize="true"
+      :firstDataRendered="onFirstDataRendered"
     >
     </ag-grid-vue>
   </div>
@@ -34,7 +35,8 @@ export default {
   },
   data () {
     return {
-      localeText: Lang
+      params: null,
+      localeText: Lang,
     }
   },
   props: {
@@ -82,19 +84,41 @@ export default {
      */
     overlayLoadingTemplate() {
       return '<span class="ag-overlay-loading-center">正在加载行,请稍候...</span>'
-    }
+    },
+    /**
+     * [onresize 是否根据窗口自动调整]
+     * @return {[Boolea]} [description]
+     */
+    onresize() {
+      return this.config.hasOwnProperty('onresize')? this.config.onresize: false
+    },
   },
   methods: {
     /**
      * [onGridReady 加载 gridApi 用于更高功能开发]
      */
     onGridReady(params) {
-      this.gridApi = params.api;
-      this.columnApi = params.columnApi;
+      this.params = params
     },
+    /**
+     * 默认情况下调整列大小
+     */
+    onFirstDataRendered(params) {
+      if (this.onresize) {
+        params.api.sizeColumnsToFit()
+      }
+    },
+    /** 1
+     * 监控窗口变化调整
+     */
+    onResize() {
+      window.onresize = () =>{
+        this.onFirstDataRendered(this.params)
+      }
+    }
   },
   mounted() {
-    // console.log(this.refTable);
+    this.onResize()
   }
 }
 </script>
