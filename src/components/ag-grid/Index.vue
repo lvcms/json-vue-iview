@@ -9,6 +9,7 @@
       :columnDefs="columns"
       :localeText="localeText"
       :overlayLoadingTemplate="overlayLoadingTemplate"
+      :enableColResize="true"
       :suppressResize="true"
       :firstDataRendered="onFirstDataRendered"
     >
