@@ -94,7 +94,35 @@ export default {
       return this.config.hasOwnProperty('onresize')? this.config.onresize: false
     },
   },
+  created() {
+    this.eventOn()
+  },
+  beforeDestroy() {
+    this.$event.$off('buttin-event')
+  },
   methods: {
+    /**
+    * [eventOn 事件监听]
+    * @return {[type]} [description]
+    */
+    eventOn() {
+      this.$event.$on('buttin-event', result => {
+        // 增加判断 ref 判断 防止操作其他定义 ref
+        if (result.params.ref === this.refName) {
+          switch (result.event) {
+            case 'agGridAdd':
+              this.onAdd()
+              break;
+            case 'agGridEdit':
+              this.onEdit()
+              break;
+            case 'agGrid':
+              this.onButtinEvent(result)
+              break;
+          }
+        }
+      })
+    },
     /**
      * [onGridReady 加载 gridApi 用于更高功能开发]
      */
@@ -109,13 +137,19 @@ export default {
         params.api.sizeColumnsToFit()
       }
     },
-    /** 1
+    /**
      * 监控窗口变化调整
      */
     onResize() {
       window.onresize = () =>{
         this.onFirstDataRendered(this.params)
       }
+    },
+    /**1
+     * [onButtinEvent 按钮事件触发]
+     */
+    onButtinEvent(result) {
+
     }
   },
   mounted() {

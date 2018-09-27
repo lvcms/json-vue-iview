@@ -173,10 +173,10 @@ export default {
         // 增加判断 ref 判断 防止操作其他定义 ref
         if (result.params.ref === this.refName) {
           switch (result.event) {
-            case 'formSubmit':
+            case 'form-submit':
               this.formSubmit()
               break;
-            case 'formReset':
+            case 'form-reset':
               this.formReset()
               break;
           }
@@ -193,7 +193,7 @@ export default {
           }
       })
     },
-    formReset() {;
+    formReset() {
       this.$refs[this.refName].resetFields();
     }
   },
