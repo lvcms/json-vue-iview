@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/laracore/json-vue-iview.git"
+    "url": "git+https://github.com/lvcmf/json-vue-iview.git"
   },
   "keywords": [
     "vue",
@@ -18,7 +18,7 @@
   "author": "bigRcos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/laracore/json-vue-iview/issues"
+    "url": "https://github.com/lvcmf/json-vue-iview/issues"
   },
-  "homepage": "https://github.com/laracore/json-vue-iview#readme"
+  "homepage": "https://github.com/lvcmf/json-vue-iview#readme"
 }
