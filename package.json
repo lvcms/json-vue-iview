@@ -1,6 +1,6 @@
 {
     "name": "json-vue-iview",
-    "version": "1.0.3",
+    "version": "1.0.6",
     "description": "自动构建 vue-iview 页面",
     "main": "./src/index.js",
     "scripts": {
