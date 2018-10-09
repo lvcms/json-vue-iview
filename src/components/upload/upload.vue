@@ -184,8 +184,10 @@ export default {
     handleSuccess (res, file) {
       /* [if 上传成功定义显示图片赋值ID]*/
         if (res.type=="success") {
-          this.currentValue.id = res.value.id
-          this.currentValue.url = res.value.url
+            this.currentValue = {
+                id:res.value.id,
+                url:res.value.url
+            }
         }
         this.$Notice.success({
           title: res.message,
@@ -219,8 +221,12 @@ export default {
     box-sizing:border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
-    max-width: 100%;
     height: auto;
     padding:0.07in;
+    line-height:0px;
+    >img{
+        border-radius: 4px;
+        max-width: 100%;
+    }
   }
 </style>
