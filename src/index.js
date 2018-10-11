@@ -16,6 +16,8 @@ import Checkbox from './components/checkbox'
 import Select from './components/select'
 import Upload from './components/upload'
 
+import Img from './components/img'
+
 import Table from './components/table'
 import AgGrid from './components/ag-grid'
 
@@ -39,6 +41,7 @@ const components = [
   Checkbox,
   Select,
   Upload,
+  Img,
   Table,
   AgGrid
 ]

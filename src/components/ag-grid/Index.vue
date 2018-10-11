@@ -12,27 +12,34 @@
       :enableColResize="true"
       :suppressResize="true"
       :firstDataRendered="onFirstDataRendered"
+      :ref="refTable"
     >
     </ag-grid-vue>
   </div>
 </template>
 
 <script>
-import 'ag-grid/dist/styles/ag-grid.css'
-import 'ag-grid/dist/styles/ag-theme-balham.css'
+
 /**
  * 修改 22 23 行
  * valid = true
  * current = true
  * ./node_modules/ag-grid-enterprise/dist/lib/licenseManager.js
  */
+import 'ag-grid/dist/styles/ag-grid.css'
+import 'ag-grid/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
 import {AgGridVue} from 'ag-grid-vue'
+
+import Vue from 'vue'
 import Lang from './lang'
+
+import CellImg from './cell/img'
 export default {
   name: 'jvi-ag-grid',
   components: {
-    AgGridVue
+    AgGridVue,
+    cellRendererImg:CellImg, //图片单元格渲染
   },
   data () {
     return {
@@ -77,6 +84,33 @@ export default {
      * @return {[Object]} [description]
      */
     columns() {
+        return [
+            {"headerName":"ID","field":"id"},
+            {
+                "headerName":"图片",
+                "field":"url",
+                "autoHeight":true,
+                "floatingFilterComponentParams":{
+                    "style":{
+                        width:'55px',
+                        height:'55px',
+                    },
+                },
+                "cellRendererFramework":'cellRendererImg'
+            },
+            {
+                "headerName":"文件名",
+                "field":"name",
+                "autoHeight":true,
+                "editable":true,
+            },
+            {"headerName":"文件大小","field":"size","editable":false},
+            {"headerName":"文件类型","field":"extension"},
+            {"headerName":"存储器","field":"disk"},
+            {"headerName":"下载次数","field":"download"},
+            {"headerName":"状态","field":"status"},
+            {"headerName":"时间","field":"created_at"}
+        ]
       return this.config.hasOwnProperty('columns')? this.config.columns: []
     },
     /**
@@ -92,7 +126,7 @@ export default {
      */
     onresize() {
       return this.config.hasOwnProperty('onresize')? this.config.onresize: false
-    },
+    }
   },
   created() {
     this.eventOn()
@@ -145,12 +179,12 @@ export default {
         this.onFirstDataRendered(this.params)
       }
     },
-    /**1
+    /**
      * [onButtinEvent 按钮事件触发]
      */
     onButtinEvent(result) {
 
-    }
+    },
   },
   mounted() {
     this.onResize()
