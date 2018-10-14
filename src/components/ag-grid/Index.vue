@@ -2,7 +2,7 @@
   <div>
     <ag-grid-vue
       :style="style"
-      class="ag-theme-balham"
+      class="ag-theme-material"
       :gridReady="onGridReady"
 
       :rowData="currentValue"
@@ -19,15 +19,6 @@
 </template>
 
 <script>
-
-/**
- * 修改 22 23 行
- * valid = true
- * current = true
- * ./node_modules/ag-grid-enterprise/dist/lib/licenseManager.js
- */
-import 'ag-grid/dist/styles/ag-grid.css'
-import 'ag-grid/dist/styles/ag-theme-balham.css'
 import 'ag-grid-enterprise'
 import {AgGridVue} from 'ag-grid-vue'
 
@@ -35,11 +26,14 @@ import Vue from 'vue'
 import Lang from './lang'
 
 import CellImg from './cell/img'
+import CellStatus from './cell/status'
+
 export default {
   name: 'jvi-ag-grid',
   components: {
     AgGridVue,
     cellRendererImg:CellImg, //图片单元格渲染
+    cellRendererStatus:CellStatus,
   },
   data () {
     return {
@@ -85,7 +79,10 @@ export default {
      */
     columns() {
         return [
-            {"headerName":"ID","field":"id"},
+            {
+                "headerName":"ID",
+                "field":"id",
+            },
             {
                 "headerName":"图片",
                 "field":"url",
@@ -108,8 +105,18 @@ export default {
             {"headerName":"文件类型","field":"extension"},
             {"headerName":"存储器","field":"disk"},
             {"headerName":"下载次数","field":"download"},
-            {"headerName":"状态","field":"status"},
-            {"headerName":"时间","field":"created_at"}
+            {
+                "headerName":"状态",
+                "field":"status",
+                "autoHeight":true,
+                "floatingFilterComponentParams":{
+                    "color":'success',
+                    "icon":'fa fa-check',
+                    "title": '开启'
+                },
+                "cellRendererFramework":'cellRendererStatus'
+            },
+            {"headerName":"时间","autoHeight":true,"field":"created_at"}
         ]
       return this.config.hasOwnProperty('columns')? this.config.columns: []
     },
@@ -191,6 +198,54 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" >
+// Color
+$primary-color          : #2d8cf0;
+$info-color             : #2db7f5;
+$success-color          : #19be6b;
+$processing-color       : $primary-color;
+$warning-color          : #ff9900;
+$error-color            : #ed4014;
+$normal-color           : #e6ebf1;
+$link-color             : #2D8cF0;
+$link-hover-color       : #ebf7ff;
+$link-active-color      : shade($link-color, 5%);
+$selected-color         : fade($primary-color, 90%);
+$tooltip-color          : #fff;
+$subsidiary-color       : #808695;
+$rate-star-color        : #f5a623;
 
+$icon-color: #515a6e;
+$icons-path: "~ag-grid/src/styles/icons/";
+
+// changes the border color
+// $border-color: #FF0000;
+
+// Changes the font size
+$secondary-font-size14px: 14px;
+$font-size: 12px;
+
+// Changes the font family
+$font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+
+// Reverts the cell horizontal padding change between ag-fresh and ag-theme-fresh
+// $cell-horizontal-padding: 2px;
+
+// changes the icon color
+// $icon-color: red;
+@import '~ag-grid/src/styles/ag-grid.scss';
+@import '~ag-grid/src/styles/ag-theme-material.scss';
+.ag-theme-material {
+    table-layout: fixed;
+    .ag-cell-focus {
+        // background-color: $normal-color;
+        border:1px solid #ffffff!important;
+    }
+    .ag-row-hover {
+        background-color: $link-hover-color;
+    }
+    .ag-column-hover {
+        // background-color: $normal-color ;
+    }
+}
 </style>
