@@ -8,7 +8,6 @@
     :html-type="htmlType"
     :disabled="disabled"
     :loading="loading"
-    :icon="icon"
     :custom-icon="customIcon"
     :to="to"
     :replace="replace"
@@ -16,6 +15,7 @@
     @click="handleButtin"
     :style="style"
   >
+    <i :class="icon" style="width:auto"></i>
     {{title}}
   </i-button>
 </template>

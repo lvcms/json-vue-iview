@@ -27,6 +27,8 @@ import Lang from './lang'
 
 import CellImg from './cell/img'
 import CellStatus from './cell/status'
+import CellButton from './cell/button'
+
 
 export default {
   name: 'jvi-ag-grid',
@@ -34,6 +36,7 @@ export default {
     AgGridVue,
     cellRendererImg:CellImg, //图片单元格渲染
     cellRendererStatus:CellStatus,
+    cellRendererButton:CellButton,
   },
   data () {
     return {
@@ -73,6 +76,19 @@ export default {
         this.$emit('input', newValue)
       }
     },
+    package() {
+      return this.$route.name.split(":")[0]
+    },
+    model() {
+      return this.$route.name.split(":")[1]
+    },
+    refName() {
+      /**
+       * [ref 获取唯一标识]
+       * @type {String}
+       */
+      return this.package+':'+this.model+':'+this.name
+    },
     /**
      * [columns 自定义 ag-grid 样式]
      * @return {[Object]} [description]
@@ -100,6 +116,7 @@ export default {
                 "field":"name",
                 "autoHeight":true,
                 "editable":true,
+
             },
             {"headerName":"文件大小","field":"size","editable":false},
             {"headerName":"文件类型","field":"extension"},
@@ -116,7 +133,21 @@ export default {
                 },
                 "cellRendererFramework":'cellRendererStatus'
             },
-            {"headerName":"时间","autoHeight":true,"field":"created_at"}
+            {"headerName":"时间","autoHeight":true,"field":"created_at"},
+            {
+                "headerName":"操作",
+                "autoHeight":true,
+                "field":"id",
+                "floatingFilterComponentParams":{
+                    "type":'success',
+                    "icon":'fa fa-check',
+                    "title": '编辑',
+                    "event": 'agGridEdit',
+                    "size": 'small',
+                    "refName": this.refName,
+                },
+                "cellRendererFramework":'cellRendererButton'
+            }
         ]
       return this.config.hasOwnProperty('columns')? this.config.columns: []
     },
@@ -150,17 +181,7 @@ export default {
       this.$event.$on('buttin-event', result => {
         // 增加判断 ref 判断 防止操作其他定义 ref
         if (result.params.ref === this.refName) {
-          switch (result.event) {
-            case 'agGridAdd':
-              this.onAdd()
-              break;
-            case 'agGridEdit':
-              this.onEdit()
-              break;
-            case 'agGrid':
-              this.onButtinEvent(result)
-              break;
-          }
+          this.onButtinEvent(result)
         }
       })
     },
@@ -190,6 +211,7 @@ export default {
      * [onButtinEvent 按钮事件触发]
      */
     onButtinEvent(result) {
+        console.log('处理按钮事件',result);
 
     },
   },

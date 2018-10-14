@@ -35,7 +35,7 @@ export default {
             return this.params.value
         },
         style() {
-            return this.params.colDef.floatingFilterComponentParams.style
+            return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams.style: {}
         }
     },
     methods: {
