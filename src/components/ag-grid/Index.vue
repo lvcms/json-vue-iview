@@ -2,15 +2,23 @@
   <div>
     <ag-grid-vue
       :style="style"
-      class="ag-theme-material"
+      class="ag-theme-balham"
       :gridReady="onGridReady"
+
+
+      :enableColResize="true"
+      :suppressResize="true"
+      :enableSorting="true"
+      :enableFilter="true"
+      :groupIncludeTotalFooter="true"
+      :suppressMakeColumnVisibleAfterUnGroup="true"
+      rowGroupPanelShow="always"
+      :sideBar="true"
 
       :rowData="currentValue"
       :columnDefs="columns"
       :localeText="localeText"
       :overlayLoadingTemplate="overlayLoadingTemplate"
-      :enableColResize="true"
-      :suppressResize="true"
       :firstDataRendered="onFirstDataRendered"
       :ref="refTable"
     >
@@ -20,6 +28,9 @@
 
 <script>
 import 'ag-grid-enterprise'
+import 'ag-grid-community/dist/styles/ag-grid.css'
+import 'ag-grid-community/dist/styles/ag-theme-balham.css'
+
 import {AgGridVue} from 'ag-grid-vue'
 
 import Vue from 'vue'
@@ -61,7 +72,7 @@ export default {
     style() {
       return {
         width: '100%',
-        height: '52vh'
+        height: '78vh'
       }
     },
     /**
@@ -98,10 +109,12 @@ export default {
             {
                 "headerName":"ID",
                 "field":"id",
+                "width": 120,
             },
             {
                 "headerName":"图片",
                 "field":"url",
+                "width": 160,
                 "autoHeight":true,
                 "floatingFilterComponentParams":{
                     "style":{
@@ -116,10 +129,18 @@ export default {
                 "field":"name",
                 "autoHeight":true,
                 "editable":true,
+                enableRowGroup: true,
 
             },
-            {"headerName":"文件大小","field":"size","editable":false},
-            {"headerName":"文件类型","field":"extension"},
+            {"headerName":"文件大小","field":"size","editable":false,
+                enableRowGroup: true,
+                width: 80,
+                aggFunc: 'sum',
+                filter: 'agNumberColumnFilter'
+            },
+            {"headerName":"文件类型","field":"extension",
+                enableRowGroup: true,
+            },
             {"headerName":"存储器","field":"disk"},
             {"headerName":"下载次数","field":"download"},
             {
@@ -139,12 +160,38 @@ export default {
                 "autoHeight":true,
                 "field":"id",
                 "floatingFilterComponentParams":{
-                    "type":'success',
-                    "icon":'fa fa-check',
-                    "title": '编辑',
-                    "event": 'agGridEdit',
-                    "size": 'small',
                     "refName": this.refName,
+                    "buttons" :[
+                        {
+                            "type":'success',
+                            "icon":'fa fa-check',
+                            "title": '编辑',
+                            "event": 'agGridEdit',
+                            "size": 'small',
+                            "refName": this.refName,
+                        },
+                        {
+                            "type":'info',
+                            "icon":'fa fa-check',
+                            "title": '新增',
+                            "event": 'agGridAdd',
+                            "size": 'small',
+                        },
+                        {
+                            "type":'info',
+                            "icon":'fa fa-check',
+                            "title": '新增',
+                            "event": 'agGridAdd',
+                            "size": 'small',
+                        },
+                        {
+                            "type":'info',
+                            "icon":'fa fa-check',
+                            "title": '新增',
+                            "event": 'agGridAdd',
+                            "size": 'small',
+                        },
+                    ]
                 },
                 "cellRendererFramework":'cellRendererButton'
             }
@@ -237,37 +284,45 @@ $tooltip-color          : #fff;
 $subsidiary-color       : #808695;
 $rate-star-color        : #f5a623;
 
-$icon-color: #515a6e;
-$icons-path: "~ag-grid/src/styles/icons/";
 
-// changes the border color
-// $border-color: #FF0000;
 
-// Changes the font size
-$secondary-font-size14px: 14px;
-$font-size: 12px;
-
-// Changes the font family
-$font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-
-// Reverts the cell horizontal padding change between ag-fresh and ag-theme-fresh
-// $cell-horizontal-padding: 2px;
-
-// changes the icon color
+// $font-size: 12px;
 // $icon-color: red;
-@import '~ag-grid/src/styles/ag-grid.scss';
-@import '~ag-grid/src/styles/ag-theme-material.scss';
-.ag-theme-material {
-    table-layout: fixed;
+// $font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+
+// $icons-path: "~ag-grid-community/src/styles/icons/";
+// $ag-mat-icons-path: '~ag-grid-community/src/styles/material-icons/';
+
+// @import '~ag-grid-community/src/styles/ag-grid.scss';
+// @import '~ag-grid-community/src/styles/ag-theme-material.scss';
+.ag-theme-balham {
+    .ag-column-select-panel{
+        padding-left:8px;
+        padding-right:8px;
+    }
+    .ag-row{
+        display:flex;
+        align-items:center;
+        overflow:hidden;
+    }
+    .ag-cell{
+        line-height:18px;
+        padding-left:10px;
+        padding-right:10px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space: normal;
+        word-break: break-all;
+        box-sizing: border-box;
+    }
+    .ag-cell-with-height{
+        height: auto;
+    }
     .ag-cell-focus {
-        // background-color: $normal-color;
-        border:1px solid #ffffff!important;
+        border:1px solid #ebf7ff!important;
     }
     .ag-row-hover {
         background-color: $link-hover-color;
-    }
-    .ag-column-hover {
-        // background-color: $normal-color ;
     }
 }
 </style>

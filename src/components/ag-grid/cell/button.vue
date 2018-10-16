@@ -1,8 +1,16 @@
 <template>
-    <jvi-button
-        :config="config"
-        :params="params"
-    />
+    <div
+        v-if="buttons"
+        class="cell-button"
+    >
+        <jvi-button
+            class="cell-jvi-button"
+            v-for="(config,key) in buttons"
+            :config="config"
+            :params="buttonParams"
+            :key="key"
+        />
+    </div>
 </template>
 <script>
 export default {
@@ -20,19 +28,29 @@ export default {
         value() {
             return this.params.value
         },
-        params() {
+        data() {
+            return this.params.data
+        },
+        buttonParams() {
             return {
                 ref: this.refName,
+                data: this.data,
                 value: this.value
             }
         },
-        config() {
-            return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams: {}
-        }
+        buttons() {
+            return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams.buttons:[];
+        },
+
     },
     methods: {
     }
 }
 </script>
 <style lang="scss" scoped>
+    .cell-button{
+        >.cell-jvi-button{
+            margin: 0px 5px 5px 0px;
+        }
+    }
 </style>
