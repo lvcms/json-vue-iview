@@ -11,7 +11,7 @@
         "ag-grid-community": "~19.0",
         "ag-grid-enterprise": "~19.0",
         "ag-grid-vue": "~19.0",
-        "json-vue-core": "~1.0"
+        "json-vue-core": "https://github.com/lvcms/json-vue-core"
     },
     "devDependencies": {
         "node-sass": "~4.9",
