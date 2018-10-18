@@ -10,7 +10,6 @@
       :suppressResize="true"
       :enableSorting="true"
       :enableFilter="true"
-      :groupIncludeTotalFooter="true"
       :suppressMakeColumnVisibleAfterUnGroup="true"
       rowGroupPanelShow="always"
       :sideBar="true"
@@ -37,6 +36,8 @@ import Vue from 'vue'
 import Lang from './lang'
 
 import CellImg from './cell/img'
+import CellFileName from './cell/file-name'
+import CellFileSize from './cell/file-size'
 import CellStatus from './cell/status'
 import CellButton from './cell/button'
 
@@ -46,6 +47,8 @@ export default {
   components: {
     AgGridVue,
     cellRendererImg:CellImg, //图片单元格渲染
+    cellRendererFileName:CellFileName,
+    cellRendererFileSize:CellFileSize,
     cellRendererStatus:CellStatus,
     cellRendererButton:CellButton,
   },
@@ -130,19 +133,17 @@ export default {
                 "autoHeight":true,
                 "editable":true,
                 enableRowGroup: true,
+                "cellRendererFramework": 'cellRendererFileName'
 
             },
             {"headerName":"文件大小","field":"size","editable":false,
                 enableRowGroup: true,
-                width: 80,
-                aggFunc: 'sum',
-                filter: 'agNumberColumnFilter'
-            },
-            {"headerName":"文件类型","field":"extension",
-                enableRowGroup: true,
+                width: 150,
+                "cellRendererFramework": 'cellRendererFileSize'
+
             },
             {"headerName":"存储器","field":"disk"},
-            {"headerName":"下载次数","field":"download"},
+            {"headerName":"下载次数",width: 150,"field":"download"},
             {
                 "headerName":"状态",
                 "field":"status",
