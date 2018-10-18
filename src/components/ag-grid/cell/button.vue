@@ -49,6 +49,7 @@ export default {
 </script>
 <style lang="scss" scoped>
     .cell-button{
+        margin-top: 5px;
         >.cell-jvi-button{
             margin: 0px 5px 5px 0px;
         }
