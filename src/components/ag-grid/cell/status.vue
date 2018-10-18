@@ -14,8 +14,14 @@ export default {
         }
     },
     computed: {
-        tags() {
+        value() {
+            return this.params.value
+        },
+        config() {
             return this.params.colDef.floatingFilterComponentParams
+        },
+        tags() {
+            return this.config[this.value]
         }
     },
     methods: {

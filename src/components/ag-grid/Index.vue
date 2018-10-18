@@ -168,9 +168,16 @@ export default {
                 "field":"status",
                 "autoHeight":true,
                 "floatingFilterComponentParams":{
-                    "color":'success',
-                    "icon":'fa fa-check',
-                    "title": '开启'
+                    'open':{
+                        "color":'success',
+                        "icon":'fa fa-check',
+                        "title": '正常'
+                    },
+                    'close':{
+                        "color":'error',
+                        "icon":'fa fa-close',
+                        "title": '禁用'
+                    },
                 },
                 "cellRendererFramework":'cellRendererStatus'
             },
@@ -288,61 +295,5 @@ export default {
 }
 </script>
 <style lang="scss" >
-// Color
-$primary-color          : #2d8cf0;
-$info-color             : #2db7f5;
-$success-color          : #19be6b;
-$processing-color       : $primary-color;
-$warning-color          : #ff9900;
-$error-color            : #ed4014;
-$normal-color           : #e6ebf1;
-$link-color             : #2D8cF0;
-$link-hover-color       : #ebf7ff;
-$link-active-color      : shade($link-color, 5%);
-$selected-color         : fade($primary-color, 90%);
-$tooltip-color          : #fff;
-$subsidiary-color       : #808695;
-$rate-star-color        : #f5a623;
-
-
-
-// $font-size: 12px;
-// $icon-color: red;
-// $font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-
-// $icons-path: "~ag-grid-community/src/styles/icons/";
-// $ag-mat-icons-path: '~ag-grid-community/src/styles/material-icons/';
-
-// @import '~ag-grid-community/src/styles/ag-grid.scss';
-// @import '~ag-grid-community/src/styles/ag-theme-material.scss';
-.ag-theme-balham {
-    .ag-column-select-panel{
-        padding-left:8px;
-        padding-right:8px;
-    }
-    .ag-row{
-        display:flex;
-        align-items:center;
-        overflow:hidden;
-    }
-    .ag-cell{
-        line-height:18px;
-        padding-left:10px;
-        padding-right:10px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space: normal;
-        word-break: break-all;
-        box-sizing: border-box;
-    }
-    .ag-cell-with-height{
-        height: auto;
-    }
-    .ag-cell-focus {
-        border:1px solid #ebf7ff!important;
-    }
-    .ag-row-hover {
-        background-color: $link-hover-color;
-    }
-}
+@import './styles/ag-theme-balham.scss';
 </style>
