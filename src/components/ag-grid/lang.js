@@ -1,13 +1,13 @@
 export default {
     // for filter panel
-    page: 'daPage',
-    more: 'daMore',
-    to: 'daTo',
-    of: 'daOf',
-    next: 'daNexten',
-    last: 'daLasten',
-    first: 'daFirsten',
-    previous: 'daPreviousen',
+    page: '页',
+    more: '更多',
+    to: '到',
+    of: '关于',
+    next: '下一页',
+    last: '最后一页',
+    first: '第一页',
+    previous: '以前',
     loadingOoo: '加载中...',
 
     // for set filter
@@ -55,7 +55,7 @@ export default {
 
     // enterprise menu
     pinColumn: '锁定柱',
-    valueAggregation: 'laValue Agg',
+    valueAggregation: '聚合值',
     autosizeThiscolumn: '自动调整列',
     autosizeAllColumns: '自动调整所有列',
     groupBy: '分组',
@@ -89,5 +89,6 @@ export default {
     copyWithHeaders: '复制表头',
     ctrlC: 'ctrl + C',
     paste: '粘贴',
-    ctrlV: 'ctrl + V'
+    ctrlV: 'ctrl + V',
+    filters: '筛选'
 }
