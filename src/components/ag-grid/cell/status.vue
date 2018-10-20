@@ -18,10 +18,17 @@ export default {
             return this.params.value
         },
         config() {
-            return this.params.colDef.floatingFilterComponentParams
+            return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams: {}
+        },
+        refName() {
+            return this.config.refName
+        },
+
+        value() {
+            return this.params.value
         },
         tags() {
-            return this.config[this.value]
+            return this.config.params[this.value]
         }
     },
     methods: {

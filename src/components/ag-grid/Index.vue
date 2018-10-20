@@ -19,7 +19,7 @@
       :localeText="localeText"
       :overlayLoadingTemplate="overlayLoadingTemplate"
       :firstDataRendered="onFirstDataRendered"
-      :ref="refTable"
+      :ref="refName"
     >
     </ag-grid-vue>
   </div>
@@ -73,7 +73,6 @@ export default {
                     toolPanel: 'agFiltersToolPanel',
                 }
             ],
-            defaultToolPanel: ''
         }
     }
   },
@@ -84,7 +83,7 @@ export default {
     value: {
         type: [Array, Object],
     },
-    refTable: String // table ref 全栈唯一识别符
+    refName: String // table ref 全栈唯一识别符
   },
   computed: {
     /**
@@ -109,25 +108,12 @@ export default {
         this.$emit('input', newValue)
       }
     },
-    package() {
-      return this.$route.name.split(":")[0]
-    },
-    model() {
-      return this.$route.name.split(":")[1]
-    },
-    refName() {
-      /**
-       * [ref 获取唯一标识]
-       * @type {String}
-       */
-      return this.package+':'+this.model+':'+this.name
-    },
     /**
      * [columns 自定义 ag-grid 样式]
      * @return {[Object]} [description]
      */
     columns() {
-        return [
+        return this.handlerColumns([
             {
                 "headerName":"ID",
                 "field":"id",
@@ -138,7 +124,7 @@ export default {
                 "field":"url",
                 "width": 160,
                 "autoHeight":true,
-                "floatingFilterComponentParams":{
+                "params":{
                     "style":{
                         width:'55px',
                         height:'55px',
@@ -167,7 +153,7 @@ export default {
                 "headerName":"状态",
                 "field":"status",
                 "autoHeight":true,
-                "floatingFilterComponentParams":{
+                "params":{
                     'open':{
                         "color":'success',
                         "icon":'fa fa-check',
@@ -186,43 +172,48 @@ export default {
                 "headerName":"操作",
                 "autoHeight":true,
                 "field":"id",
-                "floatingFilterComponentParams":{
-                    "refName": this.refName,
+                "width":350,
+                "params":{
                     "buttons" :[
                         {
                             "type":'success',
                             "icon":'fa fa-check',
-                            "title": '编辑',
+                            "title": '新增',
+                            "event": 'agGridAdd',
+                        },
+                        {
+                            "type":'warning',
+                            "icon":'fa fa-check',
+                            "title": '打开',
+                            "event": 'agGridAdd',
+                            "show": ['close'],
+                        },
+                        {
+                            "type":'error',
+                            "icon":'fa fa-check',
+                            "title": '关闭',
                             "event": 'agGridEdit',
-                            "size": 'small',
-                            "refName": this.refName,
+                            "show": ['open']
+                        },
+                        {
+                            "type":'success',
+                            "icon":'fa fa-check',
+                            "title": '开启',
+                            "event": 'agGridAdd',
+                            "hide": ['open']
                         },
                         {
                             "type":'info',
                             "icon":'fa fa-check',
-                            "title": '新增',
+                            "title": '合上',
                             "event": 'agGridAdd',
-                            "size": 'small',
-                        },
-                        {
-                            "type":'info',
-                            "icon":'fa fa-check',
-                            "title": '新增',
-                            "event": 'agGridAdd',
-                            "size": 'small',
-                        },
-                        {
-                            "type":'info',
-                            "icon":'fa fa-check',
-                            "title": '新增',
-                            "event": 'agGridAdd',
-                            "size": 'small',
+                            "hide": ['close']
                         },
                     ]
                 },
                 "cellRendererFramework":'cellRendererButton'
             }
-        ]
+        ]);
       return this.config.hasOwnProperty('columns')? this.config.columns: []
     },
     /**
@@ -286,7 +277,22 @@ export default {
      */
     onButtinEvent(result) {
         console.log('处理按钮事件',result);
-
+    },
+    /**
+     * 处理 cloumns 数据
+     *
+     */
+    handlerColumns(columns) {
+        return columns.map((column) => {
+            if (column.hasOwnProperty('cellRendererFramework')) {
+                column.floatingFilterComponentParams = {
+                    refName: this.refName,
+                    params: column.params
+                }
+                delete column.params
+            }
+            return column
+        });
     },
   },
   mounted() {

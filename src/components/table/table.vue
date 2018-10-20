@@ -14,7 +14,7 @@
     :size="size"
     :no-data-text="noDataText"
     :no-filtered-data-text="noFilteredDataText"
-    :ref="refTable"
+    :ref="refName"
   >
   </i-table>
 </template>
@@ -29,7 +29,7 @@ export default {
     value: {
         type: [Array, Object],
     },
-    refTable: String // table ref 全栈唯一识别符
+    refName: String // table ref 全栈唯一识别符
   },
   computed: {
     /**

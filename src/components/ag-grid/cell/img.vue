@@ -31,11 +31,20 @@ export default {
         }
     },
     computed: {
-        img() {
+        value() {
             return this.params.value
         },
+        config() {
+            return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams: {}
+        },
+        refName() {
+            return this.config.refName
+        },
+        img() {
+            return this.value
+        },
         style() {
-            return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams.style: {}
+            return this.config.params.style
         }
     },
     methods: {

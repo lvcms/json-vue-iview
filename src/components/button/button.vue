@@ -1,5 +1,6 @@
 <template>
   <i-button
+    v-if="display"
     :type="type"
     :ghost="ghost"
     :size="size"
@@ -137,6 +138,13 @@ export default {
       return this.config.hasOwnProperty('title')? this.config.title: null
     },
     /**
+     * [title 按钮是否显示]
+     * @return {Boolean} [description]
+     */
+    display() {
+        return this.config.hasOwnProperty('display')? this.config.display: true
+    },
+    /**
      * [event 按钮点击事件]
      * @return {String} [description]
      */
@@ -154,7 +162,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.refTable);
   }
 }
 </script>

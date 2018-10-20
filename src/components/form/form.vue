@@ -59,14 +59,14 @@
         v-if="item.component=='table'"
         v-model="value[index]"
         :config="item"
-        :ref-table="refName+':'+index"
+        :ref-name="refName+':'+index"
         :key="key"
       />
       <jvi-ag-grid
         v-if="item.component=='agGrid'"
         v-model="value[index]"
         :config="item"
-        :ref-table="refName+':'+index"
+        :ref-name="refName+':'+index"
         :key="key"
       />
       <jvi-button
