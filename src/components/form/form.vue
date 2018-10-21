@@ -66,6 +66,7 @@
         v-if="item.component=='agGrid'"
         v-model="value[index]"
         :config="item"
+        @button="handleButton"
         :ref-name="refName+':'+index"
         :key="key"
       />
@@ -195,6 +196,9 @@ export default {
     },
     formReset() {
       this.$refs[this.refName].resetFields();
+    },
+    handleButton(params) {
+        this.$emit('button',params);
     }
   },
   mounted() {

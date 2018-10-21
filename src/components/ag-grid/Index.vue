@@ -113,108 +113,7 @@ export default {
      * @return {[Object]} [description]
      */
     columns() {
-        return this.handlerColumns([
-            {
-                "headerName":"ID",
-                "field":"id",
-                "width": 120,
-            },
-            {
-                "headerName":"图片",
-                "field":"url",
-                "width": 160,
-                "autoHeight":true,
-                "params":{
-                    "style":{
-                        width:'55px',
-                        height:'55px',
-                    },
-                },
-                "cellRendererFramework":'cellRendererImg'
-            },
-            {
-                "headerName":"文件名",
-                "field":"name",
-                "autoHeight":true,
-                "editable":true,
-                enableRowGroup: true,
-                "cellRendererFramework": 'cellRendererFileName'
-
-            },
-            {"headerName":"文件大小","field":"size","editable":false,
-                enableRowGroup: true,
-                width: 150,
-                "cellRendererFramework": 'cellRendererFileSize'
-
-            },
-            {"headerName":"存储器","field":"disk"},
-            {"headerName":"下载次数",width: 150,"field":"download"},
-            {
-                "headerName":"状态",
-                "field":"status",
-                "autoHeight":true,
-                "params":{
-                    'open':{
-                        "color":'success',
-                        "icon":'fa fa-check',
-                        "title": '正常'
-                    },
-                    'close':{
-                        "color":'error',
-                        "icon":'fa fa-close',
-                        "title": '禁用'
-                    },
-                },
-                "cellRendererFramework":'cellRendererStatus'
-            },
-            {"headerName":"时间","autoHeight":true,"field":"created_at"},
-            {
-                "headerName":"操作",
-                "autoHeight":true,
-                "field":"id",
-                "width":350,
-                "params":{
-                    "buttons" :[
-                        {
-                            "type":'success',
-                            "icon":'fa fa-check',
-                            "title": '新增',
-                            "event": 'agGridAdd',
-                        },
-                        {
-                            "type":'warning',
-                            "icon":'fa fa-check',
-                            "title": '打开',
-                            "event": 'agGridAdd',
-                            "show": ['close'],
-                        },
-                        {
-                            "type":'error',
-                            "icon":'fa fa-check',
-                            "title": '关闭',
-                            "event": 'agGridEdit',
-                            "show": ['open']
-                        },
-                        {
-                            "type":'success',
-                            "icon":'fa fa-check',
-                            "title": '开启',
-                            "event": 'agGridAdd',
-                            "hide": ['open']
-                        },
-                        {
-                            "type":'info',
-                            "icon":'fa fa-check',
-                            "title": '合上',
-                            "event": 'agGridAdd',
-                            "hide": ['close']
-                        },
-                    ]
-                },
-                "cellRendererFramework":'cellRendererButton'
-            }
-        ]);
-      return this.config.hasOwnProperty('columns')? this.config.columns: []
+      return this.config.hasOwnProperty('columns')? this.handlerColumns(this.config.columns): []
     },
     /**
      * [overlayLoadingTemplate 自定义加载模板]
@@ -228,7 +127,7 @@ export default {
      * @return {[Boolea]} [description]
      */
     onresize() {
-      return this.config.hasOwnProperty('onresize')? this.config.onresize: false
+      return this.config.hasOwnProperty('onresize')? this.config.onresize: true
     }
   },
   created() {
@@ -276,7 +175,18 @@ export default {
      * [onButtinEvent 按钮事件触发]
      */
     onButtinEvent(result) {
-        console.log('处理按钮事件',result);
+        /**
+         * 处理 发送数据有哪些
+         * 后期增加模板替换 或者 正则替换
+         */
+        let post = result.params.post
+        // 附加 id属性
+        post.id = result.params.data.id
+        switch (result.event) {
+            case 'agGrid':
+              this.$emit('button',post);
+              break;
+        }
     },
     /**
      * 处理 cloumns 数据

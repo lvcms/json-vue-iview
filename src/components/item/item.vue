@@ -19,6 +19,7 @@
           :value="itemValue"
           :name="itemName"
           @form-submit="handleFormSubmit"
+          @button="handleButton"
       />
     </template>
     <Spin
@@ -171,6 +172,33 @@
           console.error(error);
           this.$event.$emit('form-submit-catch', error);
         })
+      },
+      handleButton(params) {
+        this.$apollo.mutate({
+          mutation: gql`mutation ($package: String!, $model: String!, $value: String!) {
+            updateModel(package: $package, model: $model, value: $value){
+              status,
+              message,
+              value
+            }
+          }`,
+          variables: {
+            package: this.package,
+            model: this.model,
+            item: this.itemName,
+            value: JSON.stringify(params)
+          },
+        }).then((result) => {
+          this.$Message.success(result.data.updateModel.message)
+          this.$event.$emit('item-button-then', result);
+        }).catch((error) => {
+          this.graphqlError(error.message).then( message => {
+            this.$Message.error(message)
+          })
+          console.error(error);
+          this.$event.$emit('item-button-catch', error);
+        })
+
       }
     },
     mounted() {

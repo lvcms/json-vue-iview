@@ -150,8 +150,7 @@ export default {
      */
     event() {
       return this.config.hasOwnProperty('event')? this.config.event: null
-    }
-
+    },
   },
   methods: {
     handleButtin() {

@@ -7,7 +7,7 @@
             class="cell-jvi-button"
             v-for="(config,key) in buttons"
             :config="config"
-            :params="buttonParams"
+            :params="config.params"
             :key="key"
         />
     </div>
@@ -33,15 +33,7 @@ export default {
         refName() {
             return this.config.refName
         },
-        buttonParams() {
-            return {
-                ref: this.refName,
-                data: this.data,
-                value: this.value
-            }
-        },
         buttons() {
-            let buttons = []
             let display = (button)=>{
                 let status
                 if (button.hasOwnProperty('statusKey')) {
@@ -62,14 +54,26 @@ export default {
                 }
                 return true
             }
+
+            let buttons = []
             this.config.params.buttons.map((button) => {
-                // 默认按钮自提大小
+                // 默认按钮字体大小
                 if (!button.hasOwnProperty('size')) {
                     button.size = 'small'
                 }
 
                 let newButton = JSON.parse(JSON.stringify(button))
+                // 判断按钮师傅显示
                 newButton.display = display(button)
+                // 计算需要回调的参数
+                newButton.params = {
+                    ref: this.refName,
+                    data: this.data,
+                    value: this.value,
+                    post: newButton.hasOwnProperty('post')? newButton.post: {}
+                }
+                // 删除后期无用对象元素
+                delete newButton.post
                 delete newButton.status
                 delete newButton.show
                 delete newButton.hide
