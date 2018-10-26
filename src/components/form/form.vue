@@ -66,7 +66,7 @@
         v-if="item.component=='agGrid'"
         v-model="value[index]"
         :config="item"
-        @button="handleButton"
+        @button="handlerButton"
         :ref-name="refName+':'+index"
         :key="key"
       />
@@ -162,7 +162,7 @@ export default {
     this.eventOn()
   },
   beforeDestroy() {
-    this.$event.$off('buttin-event')
+    this.$event.$off('button-event')
   },
   methods: {
     /**
@@ -170,7 +170,7 @@ export default {
     * @return {[type]} [description]
     */
     eventOn() {
-      this.$event.$on('buttin-event', result => {
+      this.$event.$on('button-event', result => {
         // 增加判断 ref 判断 防止操作其他定义 ref
         if (result.params.ref === this.refName) {
           switch (result.event) {
@@ -197,7 +197,7 @@ export default {
     formReset() {
       this.$refs[this.refName].resetFields();
     },
-    handleButton(params) {
+    handlerButton(params) {
         this.$emit('button',params);
     }
   },

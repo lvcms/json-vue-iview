@@ -134,7 +134,7 @@ export default {
     this.eventOn()
   },
   beforeDestroy() {
-    this.$event.$off('buttin-event')
+    this.$event.$off('button-event')
   },
   methods: {
     /**
@@ -142,7 +142,7 @@ export default {
     * @return {[type]} [description]
     */
     eventOn() {
-      this.$event.$on('buttin-event', result => {
+      this.$event.$on('button-event', result => {
         // 增加判断 ref 判断 防止操作其他定义 ref
         if (result.params.ref === this.refName) {
           this.onButtinEvent(result)
@@ -182,6 +182,7 @@ export default {
         let post = result.params.post
         // 附加 id属性
         post.id = result.params.data.id
+
         switch (result.event) {
             case 'agGrid':
               this.$emit('button',post);

@@ -1,5 +1,6 @@
-import Index from './components/index'
+import store from './store'
 
+import Index from './components/index'
 // layout
 import Row from './components/layout-row'
 import Col from './components/layout-col'
@@ -43,10 +44,12 @@ const components = [
   AgGrid
 ]
 
-const install = function (Vue, opts = {}) {
+const install = function (Vue) {
   components.map(component => {
     Vue.component(component.name, component)
   })
 }
+// 加载 vuex 配置
+install.store = store
 
 export default install

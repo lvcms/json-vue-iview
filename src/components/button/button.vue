@@ -13,7 +13,7 @@
     :to="to"
     :replace="replace"
     :target="target"
-    @click="handleButtin"
+    @click="handlerButton"
     :style="style"
   >
     <i :class="icon" style="width:auto"></i>
@@ -153,8 +153,8 @@ export default {
     },
   },
   methods: {
-    handleButtin() {
-      this.$event.$emit('buttin-event', {
+    handlerButton() {
+      this.$event.$emit('button-event', {
         event: this.event,
         params: this.params
       });
