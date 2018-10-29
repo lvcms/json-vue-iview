@@ -101,7 +101,8 @@
     },
     methods: {
       ...mapActions([
-        'graphqlError',
+            'eventFormSubmit',
+            'graphqlError',
       ]),
       /**
        * [getItem 根据当前项目名称异步获取 layout 数据 ]
@@ -137,10 +138,9 @@
           }).then((result) => {
             this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
           }).catch((error) => {
-            this.graphqlError(error.message).then( message => {
+            this.graphqlError(error).then( message => {
               this.$Message.error(message)
             })
-            console.error(error)
             this.itemValue = {}
           })
         }else{
@@ -163,14 +163,13 @@
             value: JSON.stringify(this.itemValue)
           },
         }).then((result) => {
-          this.$Message.success(result.data.updateModel.message)
-          this.$event.$emit('form-submit-then', result);
+          this.eventFormSubmit(result).then( ({message}) => {
+            this.$Message.success(message)
+          })
         }).catch((error) => {
-          this.graphqlError(error.message).then( message => {
+          this.graphqlError(error).then( message => {
             this.$Message.error(message)
           })
-          console.error(error);
-          this.$event.$emit('form-submit-catch', error);
         })
       },
       handleButton(params) {
@@ -192,11 +191,9 @@
           this.$Message.success(result.data.updateModel.message)
           this.$event.$emit('item-button-then', result);
         }).catch((error) => {
-          this.graphqlError(error.message).then( message => {
+          this.graphqlError(error).then( message => {
             this.$Message.error(message)
           })
-          console.error(error);
-          this.$event.$emit('item-button-catch', error);
         })
 
       }

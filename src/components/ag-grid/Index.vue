@@ -198,7 +198,8 @@ export default {
             if (column.hasOwnProperty('cellRendererFramework')) {
                 column.floatingFilterComponentParams = {
                     refName: this.refName,
-                    params: column.params
+                    params: column.params,
+                    $store:this.$store
                 }
                 delete column.params
             }

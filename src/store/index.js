@@ -1,17 +1,15 @@
+import mutations from './mutations'
+import * as actions from './actions'
+import * as getters from './getters'
 const state = {
-    dazle:'aaa'
+    layout: [],
+    formSubmit:{},
+    button:{}
 }
-// getters
-const getters = {}
 
-// actions
-const actions = {}
-
-// mutations
-const mutations = {}
 
 export default {
-    namespaced: true,
+    name: 'json',
     state,
     getters,
     actions,

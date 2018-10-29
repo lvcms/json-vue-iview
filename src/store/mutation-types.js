@@ -1,0 +1,8 @@
+export const SET_ROOT_FORM_SUBMIT = 'SET_ROOT_FORM_SUBMIT'
+
+export const SET_LAYOUT = 'SET_LAYOUT'
+export const SET_FORM_SUBMIT = 'SET_FORM_SUBMIT'
+export const SET_BUTTON = 'SET_BUTTON'
+
+
+

@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'jvi-form',
   data() {
@@ -95,6 +96,9 @@ export default {
       name: String,
   },
   computed: {
+    ...mapState({
+        buttonEvent: state => state.json.button,
+    }),
     package() {
       return this.$route.name.split(":")[0]
     },
@@ -158,22 +162,21 @@ export default {
       return this.layout.item? this.layout.item: {}
     },
   },
-  created() {
-    this.eventOn()
-  },
-  beforeDestroy() {
-    this.$event.$off('button-event')
+  watch: {
+        buttonEvent: {
+            handler: 'handleButtonEvent',
+            deep: true
+        },
   },
   methods: {
     /**
-    * [eventOn 事件监听]
+    * [handleButtonEvent 事件监听]
     * @return {[type]} [description]
     */
-    eventOn() {
-      this.$event.$on('button-event', result => {
-        // 增加判断 ref 判断 防止操作其他定义 ref
-        if (result.params.ref === this.refName) {
-          switch (result.event) {
+    handleButtonEvent() {
+         // 增加判断 ref 判断 防止操作其他定义 ref
+        if (this.buttonEvent.params.ref === this.refName) {
+          switch (this.buttonEvent.event) {
             case 'form-submit':
               this.formSubmit()
               break;
@@ -182,7 +185,6 @@ export default {
               break;
           }
         }
-      })
     },
     formSubmit() {
       this.$refs[this.refName].validate((valid) => {

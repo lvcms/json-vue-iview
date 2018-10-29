@@ -30,6 +30,10 @@ export default {
         config() {
             return this.params.colDef.hasOwnProperty('floatingFilterComponentParams')? this.params.colDef.floatingFilterComponentParams: {}
         },
+        // 把 vuex 注册进来
+        $store() {
+            return this.config.$store
+        },
         refName() {
             return this.config.refName
         },

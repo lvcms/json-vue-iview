@@ -32,7 +32,8 @@
     },
     methods: {
       ...mapActions([
-        'graphqlError',
+            'eventLayout',
+            'graphqlError',
       ]),
       initJson(){
         Cache.remember(this.$route.name+":layout", async () => {
@@ -51,12 +52,11 @@
           return apollo.data.model
         } , 60*24*7).then((data) => {
           this.layout = data.layout
-          this.$event.$emit('model-layout-then', data);
+          this.eventLayout(data)
         }).catch((error) => {
-          this.graphqlError(error.message).then( message => {
+          this.graphqlError(error).then( message => {
             this.$Message.error(message)
           })
-          this.$event.$emit('model-layout-catch', error);
         })
       }
     }

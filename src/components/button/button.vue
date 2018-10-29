@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'jvi-button',
   props: {
@@ -153,11 +154,19 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+        'eventButton',
+    ]),
     handlerButton() {
-      this.$event.$emit('button-event', {
-        event: this.event,
-        params: this.params
-      });
+        this.eventButton({
+            event: this.event,
+            params: this.params
+        })
+
+        // this.$event.$emit('button-event', {
+        //     event: this.event,
+        //     params: this.params
+        // })
     }
   },
   mounted() {
@@ -166,3 +175,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 </style>
+
