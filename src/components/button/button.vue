@@ -162,11 +162,6 @@ export default {
             event: this.event,
             params: this.params
         })
-
-        // this.$event.$emit('button-event', {
-        //     event: this.event,
-        //     params: this.params
-        // })
     }
   },
   mounted() {
