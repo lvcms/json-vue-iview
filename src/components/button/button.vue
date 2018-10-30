@@ -118,7 +118,7 @@ export default {
       return this.config.hasOwnProperty('to')? this.config.to: null
     },
     /**
-     * [replace 路由跳转时，开启 replace 将不会向 history 添加新记录]
+     * [replace 路由跳转时，开启 replace 将不 会向 history 添加新记录]
      * @return {Boolean} [description]
      */
     replace() {

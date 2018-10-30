@@ -188,8 +188,10 @@
             value: JSON.stringify(params)
           },
         }).then((result) => {
+            //请求成功重新获取数据
+          this.getItemValue()
           this.$Message.success(result.data.updateModel.message)
-          this.$event.$emit('item-button-then', result);
+
         }).catch((error) => {
           this.graphqlError(error).then( message => {
             this.$Message.error(message)

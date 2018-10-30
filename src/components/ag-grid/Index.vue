@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import 'ag-grid-enterprise'
 import 'ag-grid-community/dist/styles/ag-grid.css'
 import 'ag-grid-community/dist/styles/ag-theme-balham.css'
@@ -73,6 +75,7 @@ export default {
                     toolPanel: 'agFiltersToolPanel',
                 }
             ],
+            defaultToolPanel: null
         }
     }
   },
@@ -86,6 +89,9 @@ export default {
     refName: String // table ref 全栈唯一识别符
   },
   computed: {
+    ...mapState({
+        buttonEvent: state => state.json.button,
+    }),
     /**
      * [style 自定义 ag-grid 样式]
      * @return {[Object]} [description]
@@ -130,24 +136,34 @@ export default {
       return this.config.hasOwnProperty('onresize')? this.config.onresize: true
     }
   },
-  created() {
-    this.eventOn()
-  },
-  beforeDestroy() {
-    this.$event.$off('button-event')
+  watch: {
+        buttonEvent: {
+            handler: 'handleButtonEvent',
+            deep: true
+        },
   },
   methods: {
     /**
-    * [eventOn 事件监听]
+    * [handleButtonEvent 事件监听]
     * @return {[type]} [description]
     */
-    eventOn() {
-      this.$event.$on('button-event', result => {
+    handleButtonEvent() {
         // 增加判断 ref 判断 防止操作其他定义 ref
-        if (result.params.ref === this.refName) {
-          this.onButtinEvent(result)
+        if (this.buttonEvent.params.ref === this.refName) {
+            /**
+             * 处理 发送数据有哪些
+             * 后期增加模板替换 或者 正则替换
+             */
+            let post = this.buttonEvent.params.post
+            // 附加 id属性
+            post.id = this.buttonEvent.params.data.id
+
+            switch (this.buttonEvent.event) {
+                case 'agGrid':
+                this.$emit('button',post);
+                break;
+            }
         }
-      })
     },
     /**
      * [onGridReady 加载 gridApi 用于更高功能开发]
@@ -170,24 +186,6 @@ export default {
       window.onresize = () =>{
         this.onFirstDataRendered(this.params)
       }
-    },
-    /**
-     * [onButtinEvent 按钮事件触发]
-     */
-    onButtinEvent(result) {
-        /**
-         * 处理 发送数据有哪些
-         * 后期增加模板替换 或者 正则替换
-         */
-        let post = result.params.post
-        // 附加 id属性
-        post.id = result.params.data.id
-
-        switch (result.event) {
-            case 'agGrid':
-              this.$emit('button',post);
-              break;
-        }
     },
     /**
      * 处理 cloumns 数据

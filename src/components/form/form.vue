@@ -174,7 +174,7 @@ export default {
     * @return {[type]} [description]
     */
     handleButtonEvent() {
-         // 增加判断 ref 判断 防止操作其他定义 ref
+        // 增加判断 ref 判断 防止操作其他定义 ref
         if (this.buttonEvent.params.ref === this.refName) {
           switch (this.buttonEvent.event) {
             case 'form-submit':
