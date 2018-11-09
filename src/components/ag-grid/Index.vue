@@ -180,6 +180,9 @@ export default {
                 case 'add':
                     this.handlerAddRow(params)
                     break;
+                case 'delete':
+                    this.handlerDeleteRow(params)
+                    break;
                 default:
                     break;
             }
@@ -190,13 +193,19 @@ export default {
     * @return {[type]} [description]
     */
     handlerUpdateValue(params) {
-        let rowNode = this.gridApi.getRowNode(params.id);
-        rowNode.setData(Object.assign(rowNode.data,params));
+        params.forEach(param => {
+            let rowNode = this.gridApi.getRowNode(param.id);
+            rowNode.setData(Object.assign(rowNode.data,param))
+        });
     },
     handlerAddRow(params) {
-        console.log(params);
-        // var res = this.gridApi.updateRowData({ add: [newItem] });
-        // console.log(res)
+        this.gridApi.updateRowData({ add: params})
+    },
+    handlerDeleteRow(params) {
+        params.forEach(param => {
+            let rowNode = this.gridApi.getRowNode(param.id);
+            this.gridApi.updateRowData({ remove: [rowNode.data]});
+        });
     },
     /**
     * [handleButtonEvent 事件监听]
