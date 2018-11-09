@@ -158,10 +158,12 @@ export default {
         'eventButton',
     ]),
     handlerButton() {
-        this.eventButton({
+        let params = {
             event: this.event,
             params: this.params
-        })
+        }
+        this.$emit('click',params)
+        this.eventButton(params)
     }
   },
   mounted() {

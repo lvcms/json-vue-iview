@@ -15,11 +15,11 @@
     <template v-if="itemValue">
       <jvi-form
           v-if="itemStyle=='form'"
-          :layout="item"
+          :layout="itemLayout"
           :value="itemValue"
-          :name="itemName"
+          :thread-params="threadParams"
           @form-submit="handleFormSubmit"
-          @button="handleButton"
+          @button="handlerButton"
       />
     </template>
     <Spin
@@ -84,11 +84,22 @@
         return this.config.item? this.config.item: null
       },
       /**
+       * [threadParams 线程参数]
+       * @return {[Object]} [description]
+       */
+      threadParams() {
+        return {
+            item: this.config.item,
+            package: this.package,
+            model: this.model,
+        }
+      },
+      /**
        * 是否需要获取项目 vlaue
        * @return {[Boolean]} [description]
        */
       isValue() {
-        return (typeof(this.item.isValue) == "undefined")? true: this.item.isValue
+        return (typeof(this.itemLayout.isValue) == "undefined")? true: this.itemLayout.isValue
       },
       /**
        * 获取项目样式后才会启用项目组件
@@ -96,13 +107,14 @@
        * @return {[Boolean]} [description]
        */
       itemStyle() {
-        return this.item.style? this.item.style: ''
+        return this.itemLayout.style? this.itemLayout.style: ''
       }
     },
     methods: {
       ...mapActions([
             'eventFormSubmit',
             'graphqlError',
+            'eventUpdate',
       ]),
       /**
        * [getItem 根据当前项目名称异步获取 layout 数据 ]
@@ -112,7 +124,7 @@
        */
       getItem() {
         Cache.get(this.$route.name+":layout").then((data) => {
-          this.item = data.item[this.itemName]
+          this.itemLayout = data.item[this.itemName]
           this.getItemValue()
         })
       },
@@ -172,7 +184,7 @@
           })
         })
       },
-      handleButton(params) {
+      handlerButton(params) {
         this.$apollo.mutate({
           mutation: gql`mutation ($package: String!, $model: String!, $value: String!) {
             updateModel(package: $package, model: $model, value: $value){
@@ -187,10 +199,10 @@
             item: this.itemName,
             value: JSON.stringify(params)
           },
+
         }).then((result) => {
-            //请求成功重新获取数据
-          this.getItemValue()
-          this.$Message.success(result.data.updateModel.message)
+            this.eventUpdate(result.data.updateModel)
+            this.$Message.success(result.data.updateModel.message)
 
         }).catch((error) => {
           this.graphqlError(error).then( message => {

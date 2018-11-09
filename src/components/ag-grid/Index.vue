@@ -5,6 +5,8 @@
       class="ag-theme-balham"
       :gridReady="onGridReady"
 
+        :deltaRowDataMode="true"
+      :getRowNodeId="getRowNodeId"
 
       :enableColResize="true"
       :suppressResize="true"
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import 'ag-grid-enterprise'
 import 'ag-grid-community/dist/styles/ag-grid.css'
@@ -56,7 +58,7 @@ export default {
   },
   data () {
     return {
-      params: null,
+      gridReady: null,
       localeText: Lang,
       sideBar:{
             toolPanels: [
@@ -86,22 +88,12 @@ export default {
     value: {
         type: [Array, Object],
     },
-    refName: String // table ref 全栈唯一识别符
+    threadParams: Object
   },
   computed: {
     ...mapState({
         buttonEvent: state => state.json.button,
     }),
-    /**
-     * [style 自定义 ag-grid 样式]
-     * @return {[Object]} [description]
-     */
-    style() {
-      return {
-        width: '100%',
-        height: '78vh'
-      }
-    },
     /**
      * [currentValue 绑定的值，可使用 v-model 双向绑定]
      * @type {Array | Object}
@@ -113,6 +105,23 @@ export default {
       set(newValue) {
         this.$emit('input', newValue)
       }
+    },
+    /**
+     * [style 自定义 ag-grid 样式]
+     * @return {[Object]} [description]
+     */
+    style() {
+      return {
+        width: '100%',
+        height: '78vh'
+      }
+    },
+    /**
+     * [ref 获取唯一标识]
+     * @type {String}
+     */
+    refName() {
+      return this.threadParams.package+':'+this.threadParams.model+':'+this.threadParams.item+':'+this.threadParams.component
     },
     /**
      * [columns 自定义 ag-grid 样式]
@@ -134,15 +143,61 @@ export default {
      */
     onresize() {
       return this.config.hasOwnProperty('onresize')? this.config.onresize: true
+    },
+    /**
+     * 设置id
+     */
+    getRowNodeId() {
+        return data=>data.id
+    },
+    /**
+     * 初始化 api
+     */
+    gridApi() {
+        return this.gridReady.api
     }
   },
   watch: {
-        buttonEvent: {
-            handler: 'handleButtonEvent',
-            deep: true
-        },
+        buttonEvent: 'handleButtonEvent',
+
   },
   methods: {
+    ...mapActions([
+        'handlerButtonEvent',
+        'graphqlError'
+    ]),
+    /**
+    * [handleUpdateEvent 更新数据事件监听]
+    * @return {[type]} [description]
+    */
+    handleUpdateEvent(data) {
+        if (data.hasOwnProperty('handler')) {
+            let params = data.params
+            switch (data.handler) {
+                case 'update':
+                    this.handlerUpdateValue(params)
+                    break;
+                case 'add':
+                    this.handlerAddRow(params)
+                    break;
+                default:
+                    break;
+            }
+        }
+    },
+    /**
+    * [handlerUpdateValue 更新数据]
+    * @return {[type]} [description]
+    */
+    handlerUpdateValue(params) {
+        let rowNode = this.gridApi.getRowNode(params.id);
+        rowNode.setData(Object.assign(rowNode.data,params));
+    },
+    handlerAddRow(params) {
+        console.log(params);
+        // var res = this.gridApi.updateRowData({ add: [newItem] });
+        // console.log(res)
+    },
     /**
     * [handleButtonEvent 事件监听]
     * @return {[type]} [description]
@@ -154,13 +209,24 @@ export default {
              * 处理 发送数据有哪些
              * 后期增加模板替换 或者 正则替换
              */
-            let post = this.buttonEvent.params.post
+            let params = this.buttonEvent.params.postParams
             // 附加 id属性
-            post.id = this.buttonEvent.params.data.id
+            params.id = this.buttonEvent.params.data.id
 
             switch (this.buttonEvent.event) {
                 case 'agGrid':
-                this.$emit('button',post);
+                this.handlerButtonEvent({
+                    apollo: this.$apollo,
+                    threadParams: this.threadParams,
+                    params
+                }).then((result) => {
+                    this.handleUpdateEvent(result.data.updateModel.value)
+                    this.$Message.success(result.data.updateModel.message)
+                }).catch((error) => {
+                    this.graphqlError(error).then( message => {
+                        this.$Message.error(message)
+                    })
+                })
                 break;
             }
         }
@@ -169,14 +235,14 @@ export default {
      * [onGridReady 加载 gridApi 用于更高功能开发]
      */
     onGridReady(params) {
-      this.params = params
+        this.gridReady = params
     },
     /**
      * 默认情况下调整列大小
      */
-    onFirstDataRendered(params) {
+    onFirstDataRendered(gridReady) {
       if (this.onresize) {
-        params.api.sizeColumnsToFit()
+        gridReady.api.sizeColumnsToFit()
       }
     },
     /**
@@ -184,7 +250,7 @@ export default {
      */
     onResize() {
       window.onresize = () =>{
-        this.onFirstDataRendered(this.params)
+        this.onFirstDataRendered(this.gridReady)
       }
     },
     /**
@@ -207,6 +273,7 @@ export default {
   },
   mounted() {
     this.onResize()
+
   }
 }
 </script>

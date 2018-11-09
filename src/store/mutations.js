@@ -13,5 +13,10 @@ export default {
     }) {
         state.button = params
     },
+    [types.SET_UPDATE_DATA](state, {
+        params
+    }) {
+        state.updateData = params
+    },
 
 }

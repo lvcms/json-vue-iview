@@ -4,7 +4,8 @@ import * as getters from './getters'
 const state = {
     layout: [],
     formSubmit:{},
-    button:{}
+    button:{},
+    updateData:{}
 }
 
 

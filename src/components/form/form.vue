@@ -67,7 +67,7 @@
         v-model="value[index]"
         :config="item"
         @button="handlerButton"
-        :ref-name="refName+':'+index"
+        :thread-params="Object.assign(threadParams,{'component':index})"
         :key="key"
       />
       <jvi-button
@@ -93,24 +93,18 @@ export default {
   props: {
       layout:{},
       value:{},
-      name: String,
+      threadParams: Object,
   },
   computed: {
     ...mapState({
         buttonEvent: state => state.json.button,
     }),
-    package() {
-      return this.$route.name.split(":")[0]
-    },
-    model() {
-      return this.$route.name.split(":")[1]
-    },
+    /**
+    * [ref 获取唯一标识]
+    * @type {String}
+    */
     refName() {
-      /**
-       * [ref 获取唯一标识]
-       * @type {String}
-       */
-      return this.package+':'+this.model+':'+this.name
+      return this.threadParams.package+':'+this.threadParams.model+':'+this.threadParams.item
     },
     validate() {
       /**
@@ -204,7 +198,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.value);
   }
 }
 </script>

@@ -74,10 +74,10 @@ export default {
                     ref: this.refName,
                     data: this.data,
                     value: this.value,
-                    post: newButton.hasOwnProperty('post')? newButton.post: {}
+                    postParams: newButton.hasOwnProperty('postParams')? newButton.postParams: {}
                 }
                 // 删除后期无用对象元素
-                delete newButton.post
+                delete newButton.postParams
                 delete newButton.status
                 delete newButton.show
                 delete newButton.hide
@@ -89,7 +89,6 @@ export default {
     methods: {
     },
     mounted() {
-
     }
 }
 </script>
