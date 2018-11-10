@@ -66,7 +66,6 @@
         v-if="item.component=='agGrid'"
         v-model="value[index]"
         :config="item"
-        @button="handlerButton"
         :thread-params="Object.assign(threadParams,{'component':index})"
         :key="key"
       />
@@ -83,7 +82,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'jvi-form',
   data() {
@@ -163,6 +162,11 @@ export default {
         },
   },
   methods: {
+    ...mapActions([
+        'handlerButtonEvent',
+        'eventFormSubmit',
+        'graphqlError'
+    ]),
     /**
     * [handleButtonEvent 事件监听]
     * @return {[type]} [description]
@@ -183,7 +187,20 @@ export default {
     formSubmit() {
       this.$refs[this.refName].validate((valid) => {
           if (valid) {
-              this.$emit('form-submit');
+                this.$emit('form-submit');
+                this.handlerButtonEvent({
+                    apollo: this.$apollo,
+                    threadParams: this.threadParams,
+                    params: this.value
+                }).then((result) => {
+                    this.eventFormSubmit(result).then( ({message}) => {
+                        this.$Message.success(message)
+                    })
+                }).catch((error) => {
+                    this.graphqlError(error).then( message => {
+                        this.$Message.error(message)
+                    })
+                })
           } else {
               console.log('error submit!! 请检查你的提交信息是否符合规则');
               this.$Message.error('请检查你的提交信息是否符合规范');
@@ -191,11 +208,9 @@ export default {
       })
     },
     formReset() {
-      this.$refs[this.refName].resetFields();
+        this.$emit('form-reset');
+        this.$refs[this.refName].resetFields();
     },
-    handlerButton(params) {
-        this.$emit('button',params);
-    }
   },
   mounted() {
   }

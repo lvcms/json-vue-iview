@@ -18,8 +18,6 @@
           :layout="itemLayout"
           :value="itemValue"
           :thread-params="threadParams"
-          @form-submit="handleFormSubmit"
-          @button="handlerButton"
       />
     </template>
     <Spin
@@ -159,58 +157,6 @@
           this.itemValue = {}
         }
       },
-      handleFormSubmit() {
-        this.$apollo.mutate({
-          mutation: gql`mutation ($package: String!, $model: String!, $value: String!) {
-            updateModel(package: $package, model: $model, value: $value){
-              status,
-              message,
-              value
-            }
-          }`,
-          variables: {
-            package: this.package,
-            model: this.model,
-            item: this.itemName,
-            value: JSON.stringify(this.itemValue)
-          },
-        }).then((result) => {
-          this.eventFormSubmit(result).then( ({message}) => {
-            this.$Message.success(message)
-          })
-        }).catch((error) => {
-          this.graphqlError(error).then( message => {
-            this.$Message.error(message)
-          })
-        })
-      },
-      handlerButton(params) {
-        this.$apollo.mutate({
-          mutation: gql`mutation ($package: String!, $model: String!, $value: String!) {
-            updateModel(package: $package, model: $model, value: $value){
-              status,
-              message,
-              value
-            }
-          }`,
-          variables: {
-            package: this.package,
-            model: this.model,
-            item: this.itemName,
-            value: JSON.stringify(params)
-          },
-
-        }).then((result) => {
-            this.eventUpdate(result.data.updateModel)
-            this.$Message.success(result.data.updateModel.message)
-
-        }).catch((error) => {
-          this.graphqlError(error).then( message => {
-            this.$Message.error(message)
-          })
-        })
-
-      }
     },
     mounted() {
       this.getItem()

@@ -61,9 +61,9 @@ export const handlerButtonEvent = ({
         apollo.mutate({
             mutation: gql `mutation ($package: String!, $model: String!, $value: String!) {
                 updateModel(package: $package, model: $model, value: $value){
-                status,
-                message,
-                value
+                    status,
+                    message,
+                    value
                 }
             }`,
             variables: {

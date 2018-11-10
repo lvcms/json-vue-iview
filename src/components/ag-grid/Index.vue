@@ -166,6 +166,40 @@ export default {
         'handlerButtonEvent',
         'graphqlError'
     ]),
+
+    /**
+    * [handleButtonEvent 事件监听]
+    * @return {[type]} [description]
+    */
+    handleButtonEvent() {
+        // 增加判断 ref 判断 防止操作其他定义 ref
+        if (this.buttonEvent.params.ref === this.refName) {
+            /**
+             * 处理 发送数据有哪些
+             * 后期增加模板替换 或者 正则替换
+             */
+            let params = this.buttonEvent.params.postParams
+            // 附加 id属性
+            params.id = this.buttonEvent.params.data.id
+
+            switch (this.buttonEvent.event) {
+                case 'agGrid':
+                this.handlerButtonEvent({
+                    apollo: this.$apollo,
+                    threadParams: this.threadParams,
+                    params
+                }).then((result) => {
+                    this.handleUpdateEvent(result.data.updateModel.value)
+                    this.$Message.success(result.data.updateModel.message)
+                }).catch((error) => {
+                    this.graphqlError(error).then( message => {
+                        this.$Message.error(message)
+                    })
+                })
+                break;
+            }
+        }
+    },
     /**
     * [handleUpdateEvent 更新数据事件监听]
     * @return {[type]} [description]
@@ -206,39 +240,6 @@ export default {
             let rowNode = this.gridApi.getRowNode(param.id);
             this.gridApi.updateRowData({ remove: [rowNode.data]});
         });
-    },
-    /**
-    * [handleButtonEvent 事件监听]
-    * @return {[type]} [description]
-    */
-    handleButtonEvent() {
-        // 增加判断 ref 判断 防止操作其他定义 ref
-        if (this.buttonEvent.params.ref === this.refName) {
-            /**
-             * 处理 发送数据有哪些
-             * 后期增加模板替换 或者 正则替换
-             */
-            let params = this.buttonEvent.params.postParams
-            // 附加 id属性
-            params.id = this.buttonEvent.params.data.id
-
-            switch (this.buttonEvent.event) {
-                case 'agGrid':
-                this.handlerButtonEvent({
-                    apollo: this.$apollo,
-                    threadParams: this.threadParams,
-                    params
-                }).then((result) => {
-                    this.handleUpdateEvent(result.data.updateModel.value)
-                    this.$Message.success(result.data.updateModel.message)
-                }).catch((error) => {
-                    this.graphqlError(error).then( message => {
-                        this.$Message.error(message)
-                    })
-                })
-                break;
-            }
-        }
     },
     /**
      * [onGridReady 加载 gridApi 用于更高功能开发]
