@@ -41,6 +41,7 @@
             query: gql`query ($package: String!, $model: String!) {
               model(package: $package, model: $model){
                 layout
+                modal
                 item
               }
             }`,
