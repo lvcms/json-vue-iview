@@ -13,7 +13,7 @@
     :to="to"
     :replace="replace"
     :target="target"
-    @click="handlerButton"
+    @click="handlerClick"
     :style="style"
   >
     <i :class="icon" style="width:auto"></i>
@@ -146,6 +146,20 @@ export default {
         return this.config.hasOwnProperty('display')? this.config.display: true
     },
     /**
+     * [confirm 确认框对象]
+     * @return {Boolean} [description]
+     */
+    confirm() {
+        let confirm = {
+            title:'危险提示',
+            content:'此操作具有不可逆性, 是否继续?',
+            cancel:'已取消操作',
+            okText: '确定',
+            cancelText: '取消'
+        }
+        return this.config.hasOwnProperty('confirm')? Object.assign(confirm,this.config.confirm): false
+    },
+    /**
      * [event 按钮点击事件]
      * @return {String} [description]
      */
@@ -157,13 +171,35 @@ export default {
     ...mapActions([
         'eventButton',
     ]),
-    handlerButton() {
-        let params = {
-            event: this.event,
-            params: this.params
-        }
-        this.$emit('click',params)
-        this.eventButton(params)
+    handlerClick() {
+        this.handlerConfirm().then(() => {
+            let params = {
+                event: this.event,
+                params: this.params
+            }
+            this.$emit('click',params)
+            this.eventButton(params)
+        })
+    },
+    handlerConfirm() {
+        return new Promise((resolve, reject) => {
+            if (this.confirm) {
+                this.$Modal.confirm({
+                    title: this.confirm.title,
+                    content: this.confirm.content,
+                    okText: this.confirm.okText,
+                    cancelText: this.confirm.cancelText,
+                    onOk: () => {
+                        resolve()
+                    },
+                    onCancel: () => {
+                        this.$Message.info(this.confirm.cancel);
+                    }
+                })
+            }else{
+                resolve()
+            }
+        })
     }
   },
   mounted() {

@@ -181,7 +181,6 @@ export default {
             let params = this.buttonEvent.params.postParams
             // 附加 id属性
             params.id = this.buttonEvent.params.data.id
-
             switch (this.buttonEvent.event) {
                 case 'agGrid':
                 this.handlerButtonEvent({
