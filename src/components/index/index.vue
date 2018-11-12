@@ -1,5 +1,18 @@
 <template>
   <div id="app">
+    <Modal
+        v-for="item in modal"
+        v-model="modal1"
+        :title="item.title"
+    >
+        <jvi-row
+            v-for="(row, index) in item.layout"
+            :row="row"
+            :key="index"
+        >
+        {{row}}
+        </jvi-row>
+    </Modal>
     <jvi-row
       v-for="(row, index) in layout"
       :row="row"
@@ -16,7 +29,9 @@
     name: 'jvi-index',
     data() {
       return {
-        layout: {}
+        layout: Array,
+        modal: Array,
+        modal1:true
       }
     },
     computed: {
@@ -53,6 +68,7 @@
           return apollo.data.model
         } , 60*24*7).then((data) => {
           this.layout = data.layout
+          this.modal = data. modal
           this.eventLayout(data)
         }).catch((error) => {
           this.graphqlError(error).then( message => {

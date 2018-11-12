@@ -1,5 +1,6 @@
 <template>
   <Card
+    v-if="card.length==0"
     :style="cardStyle"
   >
     <p
@@ -54,25 +55,32 @@
         return this.$route.name.split(":")[1]
       },
       /**
+       * [card 获取 card ]
+       * @return {[Object]} [description]
+       */
+      card() {
+        return this.config.hasOwnProperty('card')? this.config.card: Object
+      },
+      /**
        * [cardStyle 获取 card 样式配置]
        * @return {[Object]} [description]
        */
       cardStyle() {
-        return this.config.card.style? this.config.card.style: {}
+        return this.card.hasOwnProperty('style')? this.card.style: {}
       },
       /**
        * [cardTitle 获取 card 标题]
        * @return {[String]} [description]
        */
       cardTitle() {
-        return this.config.card.title? this.config.card.title: ''
+        return this.card.hasOwnProperty('title')? this.card.title: ''
       },
       /**
        * [cardIcon 获取 icon 图标]
        * @return {[String]} [description]
        */
       cardIcon() {
-        return this.config.card.icon? this.config.card.icon: ''
+        return this.card.hasOwnProperty('icon')? this.card.icon: ''
       },
       /**
        * [itemName 获取项目名称 比如 form1 form2 table1  table2]

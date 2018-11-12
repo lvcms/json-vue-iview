@@ -1,9 +1,9 @@
 <template>
   <Row
-    :gutter="row.config.gutter"
-    :type="row.config.type"
-    :align="row.config.align"
-    :justify="row.config.justify"
+    :gutter="gutter"
+    :type="type"
+    :align="align"
+    :justify="justify"
   >
     <template
       v-for="(item, index, key) in row.content"
@@ -30,6 +30,23 @@
     },
     props: {
       row: Object
+    },
+    computed: {
+        config() {
+            return this.row.hasOwnProperty('config')? this.row.config: Object
+        },
+        gutter() {
+            return this.config.hasOwnProperty('gutter')? this.config.gutter: 0
+        },
+        type() {
+            return this.config.hasOwnProperty('type')? this.config.type: null
+        },
+        align() {
+            return this.config.hasOwnProperty('align')? this.config.align: null
+        },
+        justify() {
+            return this.config.hasOwnProperty('justify')? this.config.justify: null
+        },
     }
   }
 </script>
