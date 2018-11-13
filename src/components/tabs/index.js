@@ -1,2 +1,2 @@
-import Index from './index.vue'
+import Index from './tabs.vue'
 export default Index

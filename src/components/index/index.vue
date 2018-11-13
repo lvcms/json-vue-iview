@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <Modal
-        v-for="item in modal"
+    <!-- <Modal
+        v-for="(item,index) in modal"
         v-model="modal1"
-        :title="item.title"
+        :title="item.config.title"
+        :key="index"
     >
         <jvi-row
             v-for="(row, index) in item.layout"
@@ -12,7 +13,14 @@
         >
         {{row}}
         </jvi-row>
-    </Modal>
+    </Modal> -->
+    <jvi-modal
+        v-for="(item,index) in modal"
+        :config="item.config"
+        :layout="item.layout"
+        :name="index"
+        :key="index"
+    />
     <jvi-row
       v-for="(row, index) in layout"
       :row="row"
@@ -31,7 +39,6 @@
       return {
         layout: Array,
         modal: Array,
-        modal1:true
       }
     },
     computed: {

@@ -1,6 +1,7 @@
 import store from './store'
 
 import Index from './components/index'
+import Modal from './components/modal'
 // layout
 import Row from './components/layout-row'
 import Col from './components/layout-col'
@@ -31,6 +32,7 @@ Vue.use(iView)
 
 const components = [
   Index,
+  Modal,
   Row,
   Col,
   Card,

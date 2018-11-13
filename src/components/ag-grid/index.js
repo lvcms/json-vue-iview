@@ -1,2 +1,2 @@
-import Index from './Index.vue'
+import Index from './ag-grid.vue'
 export default Index

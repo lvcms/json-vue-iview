@@ -1,2 +1,2 @@
-import Index from './index.vue'
+import Index from './card.vue'
 export default Index

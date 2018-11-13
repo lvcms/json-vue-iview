@@ -30,10 +30,6 @@
       config: Object,
       content: Object
     },
-    data() {
-      return {
-      }
-    },
     computed: {
       /**
        * [style 获取 card 样式配置]
