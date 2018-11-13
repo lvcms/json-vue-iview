@@ -4,6 +4,8 @@ import Index from './components/index'
 // layout
 import Row from './components/layout-row'
 import Col from './components/layout-col'
+import Card from './components/card'
+import Tabs from './components/tabs'
 import Item from './components/item'
 
 import Form from './components/form'
@@ -31,6 +33,8 @@ const components = [
   Index,
   Row,
   Col,
+  Card,
+  Tabs,
   Item,
   Form,
   Button,

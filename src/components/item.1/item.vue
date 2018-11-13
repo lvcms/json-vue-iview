@@ -1,5 +1,18 @@
 <template>
-<div>
+  <Card
+    v-if="isCard"
+    :style="cardStyle"
+  >
+    <p
+      v-if="cardTitle"
+      slot="title"
+    >
+      <i
+        v-if="cardIcon"
+        :class="cardIcon"
+      />
+      {{ cardTitle }}
+    </p>
     <template v-if="itemValue">
       <jvi-form
           v-if="itemStyle=='form'"
@@ -15,7 +28,7 @@
       <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
       <div>加载中...</div>
     </Spin>
-</div>
+  </Card>
 </template>
 
 <script>
@@ -27,7 +40,7 @@
   export default {
     name: 'jvi-item',
     props: {
-      itemName: String
+      config: Object
     },
     data() {
       return {
@@ -43,12 +56,54 @@
         return this.$route.name.split(":")[1]
       },
       /**
+       * [card 获取 card ]
+       * @return {[Object]} [description]
+       */
+      card() {
+        return this.config.hasOwnProperty('card')? this.config.card: Object
+      },
+       /**
+       * [isCard 是否启动Card ]
+       * @return {[Object]} [description]
+       */
+      isCard() {
+        return _.isEmpty(this.card)? false :true
+      },
+      /**
+       * [cardStyle 获取 card 样式配置]
+       * @return {[Object]} [description]
+       */
+      cardStyle() {
+        return this.card.hasOwnProperty('style')? this.card.style: {}
+      },
+      /**
+       * [cardTitle 获取 card 标题]
+       * @return {[String]} [description]
+       */
+      cardTitle() {
+        return this.card.hasOwnProperty('title')? this.card.title: ''
+      },
+      /**
+       * [cardIcon 获取 icon 图标]
+       * @return {[String]} [description]
+       */
+      cardIcon() {
+        return this.card.hasOwnProperty('icon')? this.card.icon: ''
+      },
+      /**
+       * [itemName 获取项目名称 比如 form1 form2 table1  table2]
+       * @return {[Object]} [description]
+       */
+      itemName() {
+        return this.config.item? this.config.item: null
+      },
+      /**
        * [threadParams 线程参数]
        * @return {[Object]} [description]
        */
       threadParams() {
         return {
-            item: this.itemName,
+            item: this.config.item,
             package: this.package,
             model: this.model,
         }
@@ -66,7 +121,7 @@
        * @return {[Boolean]} [description]
        */
       itemStyle() {
-        return this.itemLayout.style? this.itemLayout.style: 'form'
+        return this.itemLayout.style? this.itemLayout.style: ''
       }
     },
     methods: {
@@ -125,6 +180,10 @@
   }
 </script>
 <style lang="scss" scoped>
+  .ivu-card{
+    margin-bottom: 1vh;
+    min-width: 275px;
+  }
   .spin-icon-load{
     animation: ani-demo-spin 1s linear infinite;
   }

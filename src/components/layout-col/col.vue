@@ -13,9 +13,29 @@
     <template
       v-for="(value, index) in content"
     >
-      <jvi-item
+      <div
         v-if="value.style == 'item'"
+        :key="index"
+      >
+        <jvi-item
+            v-if="value.content.hasOwnProperty('item')"
+            :item-name="value.content.item"
+        />
+        <div
+            v-if="value.content.hasOwnProperty('html')"
+            v-html="value.content.html"
+        />
+      </div>
+      <jvi-tabs
+        v-if="value.style == 'tabs'"
         :config="value.config"
+        :props="value.props"
+        :key="index"
+      />
+      <jvi-card
+        v-if="value.style == 'card'"
+        :config="value.config"
+        :content="value.content"
         :key="index"
       />
       <subCol
