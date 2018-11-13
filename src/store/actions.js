@@ -2,14 +2,26 @@ import gql from 'graphql-tag'
 import * as types from './mutation-types'
 /**
  *[eventLayout 获取 layout 布局数据时触发]
- * @param    {[type]}                 mainData       [数据]
+ * @param    {[type]}
  */
 export const eventLayout = ({commit}, layout) => {
     commit(types.SET_LAYOUT, {layout})
 }
 /**
+ *[eventModal 按钮点击触发弹窗打开]
+ * @param    {[type]}
+ */
+export const eventModal = ({
+    commit
+}, name) => {
+    commit(types.SET_MODAL, {
+        name
+    })
+}
+
+/**
  *[eventFormSubmit form 提交实现]
- * @param    {[type]}                 mainData       [数据]
+ * @param    {[type]}
  */
 export const eventFormSubmit = ({
     commit

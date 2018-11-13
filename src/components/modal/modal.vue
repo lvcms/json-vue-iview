@@ -1,29 +1,30 @@
 <template>
-    <Modal
-        v-model="modal"
-        :title="title"
-        :closable="closable"
-        :maskClosable="maskClosable"
-        :loading="loading"
-        :scrollable="scrollable"
-        :fullscreen="fullscreen"
-        :draggable="draggable"
-        :width="width"
-        :footerHide="footerHide"
-        :styles="styles"
-        :className="className"
-        :zIndex="zIndex"
-    >
-        <jvi-row
-            v-for="(row, index) in layout"
-            :row="row"
-            :key="index"
-        />
-    </Modal>
+    <div>
+        <Modal
+            v-model="$store.state.json.modal[name]"
+            :title="title"
+            :closable="closable"
+            :maskClosable="maskClosable"
+            :loading="loading"
+            :scrollable="scrollable"
+            :fullscreen="fullscreen"
+            :draggable="draggable"
+            :width="width"
+            :footerHide="footerHide"
+            :styles="styles"
+            :className="className"
+            :zIndex="zIndex"
+        >
+            <jvi-row
+                v-for="(row, index) in layout"
+                :row="row"
+                :key="index"
+            />
+        </Modal>
+    </div>
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
   export default {
     name: 'jvi-modal',
     props: {
@@ -32,16 +33,6 @@
       name: String,
     },
     computed: {
-        ...mapState({
-            modals: state => state.json.modals
-        }),
-        /**
-         * [modal 对话框是否显示]
-         * @return {[Boolean]} [description]
-         */
-        modal() {
-            return this.modals.hasOwnProperty(this.name)? this.modals[this.name]: false
-        },
         /**
          * [title 页签的基本样式，可选值为 line 和 card]
          * @return {[String]} [description]

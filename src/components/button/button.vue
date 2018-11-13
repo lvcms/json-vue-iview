@@ -160,6 +160,15 @@ export default {
         return this.config.hasOwnProperty('confirm')? Object.assign(confirm,this.config.confirm): false
     },
     /**
+     * [modal 按钮点击触发弹窗事件]
+     *  触发弹窗名称
+     *  默认 false 不触发
+     * @return {String | Boolean} [description]
+     */
+    modal() {
+      return this.config.hasOwnProperty('modal')? this.config.modal: false
+    },
+    /**
      * [event 按钮点击事件]
      * @return {String} [description]
      */
@@ -169,10 +178,14 @@ export default {
   },
   methods: {
     ...mapActions([
+        'eventModal',
         'eventButton',
     ]),
     handlerClick() {
         this.handlerConfirm().then(() => {
+            if (this.modal) {
+                this.eventModal(this.modal)     //打开弹窗
+            }
             let params = {
                 event: this.event,
                 params: this.params

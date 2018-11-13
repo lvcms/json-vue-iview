@@ -1,7 +1,13 @@
 import * as types from './mutation-types'
+import Vue from 'vue'
 export default {
     [types.SET_LAYOUT](state, {layout}) {
         state.layout = layout
+    },
+    [types.SET_MODAL](state, {
+        name
+    }) {
+        Vue.set(state.modal, name, true)
     },
     [types.SET_FORM_SUBMIT](state, {
         result
