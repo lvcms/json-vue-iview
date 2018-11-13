@@ -14,6 +14,7 @@
       v-for="(value, index) in content"
     >
       <div
+        class="item_main"
         v-if="value.style == 'item'"
         :key="index"
       >
@@ -26,12 +27,17 @@
             v-html="value.content.html"
         />
       </div>
-      <jvi-tabs
+      <div
+        class="item_main"
         v-if="value.style == 'tabs'"
-        :config="value.config"
-        :props="value.props"
         :key="index"
-      />
+      >
+        <jvi-tabs
+            :config="value.config"
+            :props="value.props"
+            :key="index"
+        />
+      </div>
       <jvi-card
         v-if="value.style == 'card'"
         :config="value.config"
@@ -71,4 +77,12 @@
   }
 </script>
 <style lang="scss" scoped>
+.item_main{
+    border: 1px solid #dcdee2;
+    border-color: #e8eaec;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    margin-bottom: 1vh;
+}
 </style>
