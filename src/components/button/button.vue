@@ -183,12 +183,15 @@ export default {
     ]),
     handlerClick() {
         this.handlerConfirm().then(() => {
-            if (this.modal) {
-                this.eventModal(this.modal)     //打开弹窗
-            }
             let params = {
                 event: this.event,
                 params: this.params
+            }
+            if (this.modal) {
+                this.eventModal({
+                    name: this.modal,
+                    params
+                })     //打开弹窗
             }
             this.$emit('click',params)
             this.eventButton(params)

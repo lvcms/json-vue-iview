@@ -5,9 +5,13 @@ export default {
         state.layout = layout
     },
     [types.SET_MODAL](state, {
-        name
+        name,
+        params
     }) {
         Vue.set(state.modal, name, true)
+        Vue.set(state.modal.params, name, params)
+        console.log(state.modal);
+
     },
     [types.SET_FORM_SUBMIT](state, {
         result

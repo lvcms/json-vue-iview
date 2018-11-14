@@ -3,7 +3,9 @@ import * as actions from './actions'
 import * as getters from './getters'
 const state = {
     layout: [],
-    modal: {},
+    modal: {
+        params:{}
+    },
     formSubmit: {},
     button: {},
     updateData: {}

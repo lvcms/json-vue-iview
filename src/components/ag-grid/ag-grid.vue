@@ -178,15 +178,12 @@ export default {
              * 处理 发送数据有哪些
              * 后期增加模板替换 或者 正则替换
              */
-            let params = this.buttonEvent.params.postParams
-            // 附加 id属性
-            params.id = this.buttonEvent.params.data.id
             switch (this.buttonEvent.event) {
                 case 'agGrid':
                 this.handlerUpdateEvent({
                     apollo: this.$apollo,
                     threadParams: this.threadParams,
-                    params
+                    params: this.buttonEvent.params.postParams
                 }).then((result) => {
                     this.handleUpdateEvent(result.data.updateModel.value)
                     this.$Message.success(result.data.updateModel.message)

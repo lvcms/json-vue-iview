@@ -67,8 +67,16 @@ export default {
                 }
 
                 let newButton = JSON.parse(JSON.stringify(button))
-                // 判断按钮师傅显示
+                // 判断按钮是否显示
                 newButton.display = display(button)
+                // 增加发送 id
+                if (newButton.hasOwnProperty('postParams')) {
+                    newButton.postParams.id = this.data.id
+                }else{
+                    newButton.postParams = {
+                        id: this.data.id
+                    }
+                }
                 // 计算需要回调的参数
                 newButton.params = {
                     ref: this.refName,
@@ -81,6 +89,7 @@ export default {
                 delete newButton.status
                 delete newButton.show
                 delete newButton.hide
+
                 buttons.push(newButton)
             });
             return buttons;

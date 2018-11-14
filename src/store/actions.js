@@ -13,9 +13,13 @@ export const eventLayout = ({commit}, layout) => {
  */
 export const eventModal = ({
     commit
-}, name) => {
+}, {
+    name,
+    params
+}) => {
     commit(types.SET_MODAL, {
-        name
+        name,
+        params
     })
 }
 
