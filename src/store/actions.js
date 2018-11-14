@@ -59,36 +59,56 @@ export const eventUpdate = ({
     })
 }
 /**
- *[handlerButtonEvent 处理按钮事件]
- * @param    {[type]}                 mainData       [数据]
+ *[handlerUpdateEvent 处理更新事件]
+ * @param    {[type]}
  */
-export const handlerButtonEvent = ({
+export const handlerUpdateEvent = ({
     commit
 }, {
     apollo,
     threadParams,
     params
 }) => {
-    return new Promise((resolve, reject) => {
-        apollo.mutate({
-            mutation: gql `mutation ($package: String!, $model: String!, $value: String!) {
-                updateModel(package: $package, model: $model, value: $value){
+    return apollo.mutate({
+        mutation: gql `mutation ($package: String!, $model: String!, $item: String!, $params: String!) {
+                updateModel(package: $package, model: $model, item: $item, params: $params) {
                     status,
                     message,
                     value
                 }
             }`,
-            variables: {
-                package: threadParams.package,
-                model: threadParams.model,
-                item: threadParams.item,
-                value: JSON.stringify(params)
-            },
-        }).then((result) => {
-            resolve(result)
-        }).catch((error) => {
-            reject(error)
-        })
+        variables: {
+            package: threadParams.package,
+            model: threadParams.model,
+            item: threadParams.item,
+            params: JSON.stringify(params)
+        },
+    })
+}
+/**
+ *[getValue 获取项目 value]
+ * @param    {[type]}
+ */
+export const getValue = ({
+    commit
+}, {
+    apollo,
+    threadParams,
+    params
+}) => {
+    return apollo.query({
+        query: gql `query ($package: String!, $model: String!, $item: String!, $params: String!) {
+              model(package: $package, model: $model, item: $item, params: $params) {
+                value
+              }
+            }`,
+        variables: {
+            package: threadParams.package,
+            model: threadParams.model,
+            item: threadParams.item,
+            params: JSON.stringify(params)
+        },
+        fetchPolicy: 'network-only',
     })
 }
 

@@ -163,7 +163,7 @@ export default {
   },
   methods: {
     ...mapActions([
-        'handlerButtonEvent',
+        'handlerUpdateEvent',
         'eventFormSubmit',
         'graphqlError'
     ]),
@@ -188,7 +188,7 @@ export default {
       this.$refs[this.refName].validate((valid) => {
           if (valid) {
                 this.$emit('form-submit');
-                this.handlerButtonEvent({
+                this.handlerUpdateEvent({
                     apollo: this.$apollo,
                     threadParams: this.threadParams,
                     params: this.value

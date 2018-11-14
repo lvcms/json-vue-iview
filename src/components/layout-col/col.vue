@@ -78,8 +78,6 @@
 </script>
 <style lang="scss" scoped>
 .item_main{
-    border: 1px solid #dcdee2;
-    border-color: #e8eaec;
     padding: 8px;
     border-radius: 4px;
     background-color: #ffffff;

@@ -58,7 +58,7 @@
        * @return {[Boolean]} [description]
        */
       isValue() {
-        return (typeof(this.itemLayout.isValue) == "undefined")? true: this.itemLayout.isValue
+        return (typeof(this.itemLayout.config.isValue) == "undefined")? true: this.itemLayout.config.isValue
       },
       /**
        * 获取项目样式后才会启用项目组件
@@ -71,9 +71,8 @@
     },
     methods: {
       ...mapActions([
-            'eventFormSubmit',
-            'graphqlError',
-            'eventUpdate',
+        'getValue',
+        'graphqlError',
       ]),
       /**
        * [getItem 根据当前项目名称异步获取 layout 数据 ]
@@ -94,18 +93,10 @@
        */
       getItemValue() {
         if (this.isValue) {
-          this.$apollo.query({
-            query: gql`query ($package: String!, $model: String!, $item: String!) {
-              model(package: $package, model: $model, item: $item){
-                value
-              }
-            }`,
-            variables: {
-              package: this.package,
-              model: this.model,
-              item: this.itemName
-            },
-            fetchPolicy: 'network-only',
+          this.getValue({
+              apollo: this.$apollo,
+              threadParams: this.threadParams,
+              params:{}
           }).then((result) => {
             this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
           }).catch((error) => {

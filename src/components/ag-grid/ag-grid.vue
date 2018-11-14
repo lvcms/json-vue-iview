@@ -163,7 +163,7 @@ export default {
   },
   methods: {
     ...mapActions([
-        'handlerButtonEvent',
+        'handlerUpdateEvent',
         'graphqlError'
     ]),
 
@@ -183,7 +183,7 @@ export default {
             params.id = this.buttonEvent.params.data.id
             switch (this.buttonEvent.event) {
                 case 'agGrid':
-                this.handlerButtonEvent({
+                this.handlerUpdateEvent({
                     apollo: this.$apollo,
                     threadParams: this.threadParams,
                     params
