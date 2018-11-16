@@ -9,9 +9,7 @@ export default {
         params
     }) {
         Vue.set(state.modal, name, true)
-        Vue.set(state.modal.params, name, params)
-        console.log(state.modal);
-
+        Vue.set(state.itemParams, name, params)
     },
     [types.SET_FORM_SUBMIT](state, {
         result

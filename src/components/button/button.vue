@@ -190,7 +190,7 @@ export default {
             if (this.modal) {
                 this.eventModal({
                     name: this.modal,
-                    params
+                    params: this.params.postParams
                 })     //打开弹窗
             }
             this.$emit('click',params)

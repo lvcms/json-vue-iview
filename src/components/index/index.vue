@@ -1,19 +1,5 @@
 <template>
   <div id="app">
-    <!-- <Modal
-        v-for="(item,index) in modal"
-        v-model="modal1"
-        :title="item.config.title"
-        :key="index"
-    >
-        <jvi-row
-            v-for="(row, index) in item.layout"
-            :row="row"
-            :key="index"
-        >
-        {{row}}
-        </jvi-row>
-    </Modal> -->
     <jvi-modal
         v-for="(item,index) in modal"
         :config="item.config"

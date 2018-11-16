@@ -18,6 +18,7 @@
             <jvi-row
                 v-for="(row, index) in layout"
                 :row="row"
+                :modal="name"
                 :key="index"
             />
         </Modal>

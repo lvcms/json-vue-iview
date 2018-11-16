@@ -15,6 +15,7 @@
     <jvi-item
         v-if="item"
         :item-name="item"
+        :modal="modal"
     />
     <div
         v-if="html"
@@ -28,7 +29,11 @@
     name: 'jvi-card',
     props: {
       config: Object,
-      content: Object
+      content: Object,
+      modal: {
+            type: String,
+            default: null
+      },
     },
     computed: {
       /**

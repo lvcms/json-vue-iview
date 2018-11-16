@@ -11,11 +11,13 @@
       <jvi-col
        v-if="item.style=='col'"
        :col="item"
+       :modal="modal"
        :key="key"
       />
       <subRow
         v-if="item.style=='row'"
         :row="item"
+        :modal="modal"
         :key="key"
       />
     </template>
@@ -29,7 +31,11 @@
       subRow: () => import('./row.vue')
     },
     props: {
-      row: Object
+      row: Object,
+      modal: {
+            type: String,
+            default: null
+      },
     },
     computed: {
         config() {

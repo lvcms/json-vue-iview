@@ -21,6 +21,7 @@
         <jvi-item
             v-if="value.content.hasOwnProperty('item')"
             :item-name="value.content.item"
+            :modal="modal"
         />
         <div
             v-if="value.content.hasOwnProperty('html')"
@@ -35,6 +36,7 @@
         <jvi-tabs
             :config="value.config"
             :props="value.props"
+            :modal="modal"
             :key="index"
         />
       </div>
@@ -42,11 +44,13 @@
         v-if="value.style == 'card'"
         :config="value.config"
         :content="value.content"
+        :modal="modal"
         :key="index"
       />
       <subCol
         v-if="value.style == 'col'"
         :col="value"
+        :modal="modal"
         :key="index"
       />
     </template>
@@ -60,7 +64,11 @@
       subCol: () => import('./col.vue')
     },
     props: {
-      col: Object
+      col: Object,
+      modal: {
+            type: String,
+            default: null
+      },
     },
     computed: {
       /**

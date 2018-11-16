@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   import Cache from 'lf-cache'
   import _ from 'lodash'
   import gql from 'graphql-tag'
@@ -27,7 +27,11 @@
   export default {
     name: 'jvi-item',
     props: {
-      itemName: String
+      itemName: String,
+      modal: {
+            type: String,
+            default: null
+      },
     },
     data() {
       return {
@@ -36,6 +40,9 @@
       }
     },
     computed: {
+      ...mapState({
+          itemParams: state => state.json.itemParams,
+      }),
       package() {
         return this.$route.name.split(":")[0]
       },
@@ -69,11 +76,23 @@
         return this.itemLayout.style? this.itemLayout.style: 'form'
       }
     },
+    watch: {
+        itemParams: {
+            handler: 'handlerItemParams',
+            deep: true
+        },
+    },
     methods: {
       ...mapActions([
         'getValue',
         'graphqlError',
       ]),
+      handlerItemParams(value) {
+        if (value.hasOwnProperty(this.modal)) {
+
+          console.log(this.modal);
+        }
+      },
       /**
        * [getItem 根据当前项目名称异步获取 layout 数据 ]
        * [ 注意：然后获取项目值 itemValue ]
@@ -91,7 +110,7 @@
        * [ 注意：数据异步 ]
        * @return {[Object]} [description]
        */
-      getItemValue() {
+      getItemValue() {;
         if (this.isValue) {
           this.getValue({
               apollo: this.$apollo,

@@ -19,6 +19,7 @@
             <jvi-item
                 v-if="prop.content.hasOwnProperty('item')"
                 :item-name="prop.content.item"
+                :modal="modal"
             />
             <div
                 v-if="prop.content.hasOwnProperty('html')"
@@ -33,7 +34,11 @@
     name: 'jvi-tabs',
     props: {
       config: Object,
-      props: Array
+      props: Array,
+      modal: {
+            type: String,
+            default: null
+      },
     },
     computed: {
       /**
