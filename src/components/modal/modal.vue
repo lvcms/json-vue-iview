@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
   export default {
     name: 'jvi-modal',
     props: {
@@ -34,6 +35,9 @@
       name: String,
     },
     computed: {
+        ...mapState({
+            buttonEvent: state => state.json.button,
+        }),
         /**
          * [title 页签的基本样式，可选值为 line 和 card]
          * @return {[String]} [description]
@@ -133,7 +137,25 @@
             return this.config.hasOwnProperty('mask')? this.config.mask: true
         },
     },
+    watch: {
+        buttonEvent: {
+            handler: 'handleButtonEvent',
+            deep: true
+        },
+    },
     methods: {
+        /**
+        * [handleButtonEvent 事件监听]
+        * @return {[type]} [description]
+        */
+        handleButtonEvent() {
+            // 增加判断 ref 判断 防止操作其他定义 ref
+            if (this.buttonEvent.event) {
+                if (this.buttonEvent.event.includes('closeModal')) {
+                    this.$store.state.json.modal[this.name] = false
+                }
+            }
+        },
     },
     mounted() {
     }

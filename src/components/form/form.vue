@@ -173,15 +173,13 @@ export default {
     */
     handleButtonEvent() {
         // 增加判断 ref 判断 防止操作其他定义 ref
-        if (this.buttonEvent.params.ref === this.refName) {
-          switch (this.buttonEvent.event) {
-            case 'form-submit':
-              this.formSubmit()
-              break;
-            case 'form-reset':
-              this.formReset()
-              break;
-          }
+        if (this.buttonEvent.params.ref === this.refName && this.buttonEvent.event) {
+            if (this.buttonEvent.event.includes('formSubmit')) {
+                this.formSubmit()
+            }
+            if (this.buttonEvent.event.includes('formReset')) {
+                this.formReset()
+            }
         }
     },
     formSubmit() {
