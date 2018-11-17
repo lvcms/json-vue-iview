@@ -36,7 +36,9 @@
     data() {
       return {
         itemLayout: {},
-        itemValue: false
+        itemValue: false,
+        isItemValue: false,
+        params: {},
       }
     },
     computed: {
@@ -89,8 +91,10 @@
       ]),
       handlerItemParams(value) {
         if (value.hasOwnProperty(this.modal)) {
+          this.params = value[this.modal]
+          this.isItemValue = true
+          this.getItemValue()
 
-          console.log(this.modal);
         }
       },
       /**
@@ -110,12 +114,12 @@
        * [ 注意：数据异步 ]
        * @return {[Object]} [description]
        */
-      getItemValue() {;
-        if (this.isValue) {
+      getItemValue() {
+        if (this.isValue || this.isItemValue) {
           this.getValue({
               apollo: this.$apollo,
               threadParams: this.threadParams,
-              params:{}
+              params:this.params
           }).then((result) => {
             this.itemValue = JSON.parse(JSON.stringify(result.data.model.value))
           }).catch((error) => {
