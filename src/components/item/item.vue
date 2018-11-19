@@ -93,6 +93,8 @@
         if (value.hasOwnProperty(this.modal)) {
           this.params = value[this.modal]
           this.isItemValue = true
+          // 注销 form 组件重新渲染
+          this.itemValue = false
           this.getItemValue()
 
         }

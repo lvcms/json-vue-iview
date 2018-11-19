@@ -173,7 +173,8 @@ export default {
     */
     handleButtonEvent() {
         // 增加判断 ref 判断 防止操作其他定义 ref
-        if (this.buttonEvent.params.ref === this.refName && this.buttonEvent.event) {
+        if (this.buttonEvent.params.ref === this.refName && this.buttonEvent.event
+        ) {
             /**
              * 处理 发送数据有哪些
              * 后期增加模板替换 或者 正则替换
